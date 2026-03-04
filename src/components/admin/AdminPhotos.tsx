@@ -15,18 +15,18 @@ const AdminPhotos = () => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ title: "", description: "", category_id: "" });
+  const [form, setForm] = useState({ title: "", description: "", service_id: "" });
   const [file, setFile] = useState<File | null>(null);
 
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
+  const { data: services } = useQuery({
+    queryKey: ["services-list"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("categories")
-        .select("id, name")
+        .from("services")
+        .select("id, title")
         .eq("is_active", true)
         .order("sort_order", { ascending: true })
-        .order("name", { ascending: true });
+        .order("title", { ascending: true });
       if (error) throw error;
       return data;
     },
@@ -37,7 +37,7 @@ const AdminPhotos = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("photos")
-        .select("*, categories(id, name)")
+        .select("*, services(id, title)")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -62,14 +62,18 @@ const AdminPhotos = () => {
         image_url = await uploadFile(file);
       }
 
+      const payload = {
+        ...form,
+        service_id: form.service_id || null,
+      };
       if (editId) {
-        const updates: any = { ...form };
+        const updates: Record<string, unknown> = { ...payload };
         if (image_url) updates.image_url = image_url;
         const { error } = await supabase.from("photos").update(updates).eq("id", editId);
         if (error) throw error;
       } else {
         if (!image_url) throw new Error("Image requise");
-        const { error } = await supabase.from("photos").insert({ ...form, image_url });
+        const { error } = await supabase.from("photos").insert({ ...payload, image_url });
         if (error) throw error;
       }
     },
@@ -93,7 +97,7 @@ const AdminPhotos = () => {
   });
 
   const resetForm = () => {
-    setForm({ title: "", description: "", category_id: "" });
+    setForm({ title: "", description: "", service_id: "" });
     setFile(null);
     setEditId(null);
     setOpen(false);
@@ -103,7 +107,7 @@ const AdminPhotos = () => {
     setForm({ 
       title: photo.title, 
       description: photo.description || "", 
-      category_id: photo.category_id || ""
+      service_id: photo.service_id || ""
     });
     setEditId(photo.id);
     setOpen(true);
@@ -137,15 +141,15 @@ const AdminPhotos = () => {
                 <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
               </div>
               <div className="space-y-2">
-                <Label>Catégorie</Label>
-                <Select value={form.category_id} onValueChange={(value) => setForm({ ...form, category_id: value })}>
+                <Label>Service</Label>
+                <Select value={form.service_id} onValueChange={(value) => setForm({ ...form, service_id: value })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner une catégorie" />
+                    <SelectValue placeholder="Sélectionner un service" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories?.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
+                    {services?.map((service) => (
+                      <SelectItem key={service.id} value={service.id}>
+                        {service.title}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -177,8 +181,8 @@ const AdminPhotos = () => {
               <CardContent className="p-4 flex items-center justify-between">
                 <div>
                   <p className="font-semibold text-sm text-card-foreground">{photo.title}</p>
-                  {photo.categories?.name && (
-                    <p className="text-xs text-muted-foreground">Catégorie: {photo.categories.name}</p>
+                  {photo.services?.title && (
+                    <p className="text-xs text-muted-foreground">Service: {photo.services.title}</p>
                   )}
                 </div>
                 <div className="flex gap-1">

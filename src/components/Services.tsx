@@ -1,39 +1,35 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import serviceLaser from "@/assets/service-laser.jpg";
-import serviceCustom from "@/assets/service-custom.jpg";
-import serviceBanner from "@/assets/service-banner.jpg";
-import serviceRollup from "@/assets/service-rollup.jpg";
-import serviceScreen from "@/assets/service-screen.jpg";
-
-const services = [
-  {
-    title: "Impression Laser",
-    description: "Documents, flyers, cartes de visite et plus avec une qualité d'impression supérieure.",
-    image: serviceLaser,
-  },
-  {
-    title: "Personnalisation d'Objets",
-    description: "Mugs, t-shirts, casquettes et articles promotionnels à votre image.",
-    image: serviceCustom,
-  },
-  {
-    title: "Impression de Bâches",
-    description: "Bâches grand format pour événements, publicité extérieure et signalétique.",
-    image: serviceBanner,
-  },
-  {
-    title: "Roll-Up",
-    description: "Supports roll-up professionnels pour salons, expositions et présentations.",
-    image: serviceRollup,
-  },
-  {
-    title: "Sérigraphie",
-    description: "Impression sérigraphique sur textile et supports variés, haute durabilité.",
-    image: serviceScreen,
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight } from "lucide-react";
 
 const Services = () => {
+  const { data: services, isLoading } = useQuery({
+    queryKey: ["public-services"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("services")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true })
+        .order("title", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Fallback si pas de services en DB (comportement par défaut)
+  const displayServices = services && services.length > 0
+    ? services
+    : [
+        { id: "fallback-1", title: "Impression Laser", description: "Documents, flyers, cartes de visite et plus.", image_url: "/og-image.jpg" },
+        { id: "fallback-2", title: "Personnalisation d'Objets", description: "Mugs, t-shirts, casquettes et articles promotionnels.", image_url: "/og-image.jpg" },
+        { id: "fallback-3", title: "Impression de Bâches", description: "Bâches grand format pour événements et publicité.", image_url: "/og-image.jpg" },
+        { id: "fallback-4", title: "Roll-Up", description: "Supports roll-up professionnels pour salons et expositions.", image_url: "/og-image.jpg" },
+        { id: "fallback-5", title: "Sérigraphie", description: "Impression sérigraphique sur textile, haute durabilité.", image_url: "/og-image.jpg" },
+      ];
+
   return (
     <section id="services" className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4">
@@ -48,35 +44,48 @@ const Services = () => {
             Nos Services
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
-            Des solutions d'impression professionnelles adaptées à tous vos besoins.
+            Cliquez sur un service pour découvrir nos réalisations.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, i) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative overflow-hidden rounded-lg shadow-elegant bg-card"
-            >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-display font-semibold text-card-foreground mb-2">{service.title}</h3>
-                <p className="text-sm text-muted-foreground">{service.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {isLoading ? (
+          <p className="text-center text-muted-foreground py-12">Chargement des services...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayServices.map((service, i) => (
+              <Link key={service.id} to={`/services/${service.id}`}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="group relative overflow-hidden rounded-lg shadow-elegant bg-card cursor-pointer hover:shadow-gold transition-shadow"
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={service.image_url || "/og-image.jpg"}
+                      alt={service.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6">
+                      <span className="flex items-center gap-2 text-white font-medium">
+                        Voir les réalisations
+                        <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-display font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{service.description}</p>
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

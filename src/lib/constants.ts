@@ -7,3 +7,87 @@ export const CONTACT = {
   address: "2MRV+6V6, Douala — Cameroun",
   email: "quentinzango470@gmail.com",
 } as const;
+
+// Réseaux sociaux — URLs à adapter selon vos comptes
+export const SOCIAL = {
+  facebook: "https://facebook.com/universdesgadgets",
+  instagram: "https://instagram.com/universdesgadgets",
+  tiktok: "https://tiktok.com/@universdesgadgets",
+  whatsapp: `https://wa.me/${CONTACT.whatsappNumber}`,
+} as const;
+
+// Carousel homepage — 5 images avec message et bouton par slide
+// Remplacez par vos images dans: public/images/carousel/
+export const CAROUSEL_SLIDES = [
+  {
+    image: "/images/carousel/carousel-1.jpg",
+    message: "Univers des Gadgets — Votre partenaire d'impression à Douala",
+    buttonText: "Découvrir nos services",
+    buttonLink: "#services",
+  },
+  {
+    image: "/images/carousel/carousel-2.jpg",
+    message: "Impression laser, gravure et personnalisation d'objets",
+    buttonText: "Voir la galerie",
+    buttonLink: "#gallery",
+  },
+  {
+    image: "/images/carousel/carousel-3.jpg",
+    message: "Qualité professionnelle pour tous vos projets",
+    buttonText: "Demander un devis",
+    buttonLink: "#contact",
+  },
+  {
+    image: "/images/carousel/carousel-4.jpg",
+    message: "500+ projets réalisés, 100% satisfaction client",
+    buttonText: "Nous contacter",
+    buttonLink: "#contact",
+  },
+  {
+    image: "/images/carousel/carousel-5.jpg",
+    message: "Douala — Cameroun — Au service de votre créativité",
+    buttonText: "Appelez-nous",
+    buttonLink: `tel:${CONTACT.phoneTel}`,
+  },
+] as const;
+
+// Témoignages — 4 témoignages avec photo
+// Images à placer dans: public/images/testimonials/
+export const TESTIMONIALS = [
+  {
+    name: "Marie T.",
+    role: "Entrepreneure",
+    comment: "Excellente qualité d'impression et délais respectés. Je recommande vivement Univers des Gadgets pour tous vos projets !",
+    image: "/images/testimonials/temoignage-1.jpg",
+  },
+  {
+    name: "Jean-Pierre N.",
+    role: "Responsable marketing",
+    comment: "Le meilleur partenaire d'impression à Douala. Nos bâches et roll-up ont fait sensation lors du salon.",
+    image: "/images/testimonials/temoignage-2.jpg",
+  },
+  {
+    name: "Sarah M.",
+    role: "Artisan",
+    comment: "Personnalisation parfaite sur nos articles. Équipe à l'écoute et résultats au-delà de nos attentes.",
+    image: "/images/testimonials/temoignage-3.jpg",
+  },
+  {
+    name: "David K.",
+    role: "Chef d'entreprise",
+    comment: "Depuis 3 ans, nous collaborons pour nos cartes de visite et supports marketing. Toujours professionnel.",
+    image: "/images/testimonials/temoignage-4.jpg",
+  },
+] as const;
+
+// Image de fond pour la section Témoignages
+// À placer dans: public/images/testimonials/temoignages-bg.jpg
+export const TESTIMONIALS_BG = "/images/testimonials/temoignages-bg.jpg";
+
+// Image de fond pour la section Contact
+// À placer dans: public/images/contact/contact-bg.jpg
+export const CONTACT_BG = "/images/contact/contact-bg.jpg";
+
+// Image de fond pour la page À propos
+// À placer dans: public/images/about/a-propos-bg.jpg
+export const ABOUT_BG = "/images/about/a-propos-bg.jpg";

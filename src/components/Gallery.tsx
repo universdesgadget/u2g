@@ -1,53 +1,41 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { Plus, Trash2, Pencil, LogIn, LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const Gallery = () => {
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ title: "", description: "", category_id: "" });
-  const [file, setFile] = useState<File | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedService, setSelectedService] = useState<string>("all");
 
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
+  const { data: services } = useQuery({
+    queryKey: ["services-list"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("categories")
-        .select("id, name")
+        .from("services")
+        .select("id, title")
         .eq("is_active", true)
         .order("sort_order", { ascending: true })
-        .order("name", { ascending: true });
+        .order("title", { ascending: true });
       if (error) throw error;
       return data;
     },
   });
 
   const { data: photos, isLoading: photosLoading } = useQuery({
-    queryKey: ["gallery-photos", selectedCategory],
+    queryKey: ["gallery-photos", selectedService],
     queryFn: async () => {
       let query = supabase
         .from("photos")
-        .select("*, categories(id, name)")
+        .select("*, services(id, title)")
         .order("created_at", { ascending: false });
-      
-      if (selectedCategory !== "all") {
-        query = query.eq("category_id", selectedCategory);
+
+      if (selectedService !== "all") {
+        query = query.eq("service_id", selectedService);
       }
-      
+
       const { data, error } = await query;
       if (error) throw error;
       return data;
@@ -55,84 +43,22 @@ const Gallery = () => {
   });
 
   const { data: videos, isLoading: videosLoading } = useQuery({
-    queryKey: ["gallery-videos", selectedCategory],
+    queryKey: ["gallery-videos", selectedService],
     queryFn: async () => {
       let query = supabase
         .from("videos")
-        .select("*, categories(id, name)")
+        .select("*, services(id, title)")
         .order("created_at", { ascending: false });
-      
-      if (selectedCategory !== "all") {
-        query = query.eq("category_id", selectedCategory);
+
+      if (selectedService !== "all") {
+        query = query.eq("service_id", selectedService);
       }
-      
+
       const { data, error } = await query;
       if (error) throw error;
       return data;
     },
   });
-
-  const uploadFile = async (file: File) => {
-    const ext = file.name.split(".").pop();
-    const path = `photos/${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("media").upload(path, file);
-    if (error) throw error;
-    const { data } = supabase.storage.from("media").getPublicUrl(path);
-    return data.publicUrl;
-  };
-
-  const saveMutation = useMutation({
-    mutationFn: async () => {
-      let image_url = "";
-      if (file) {
-        image_url = await uploadFile(file);
-      }
-      if (editId) {
-        const updates: Record<string, string> = { ...form };
-        if (image_url) updates.image_url = image_url;
-        const { error } = await supabase.from("photos").update(updates).eq("id", editId);
-        if (error) throw error;
-      } else {
-        if (!image_url) throw new Error("Image requise");
-        const { error } = await supabase.from("photos").insert({ ...form, image_url });
-        if (error) throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["gallery-photos"] });
-      toast({ title: editId ? "Photo modifiée" : "Photo ajoutée" });
-      resetForm();
-    },
-    onError: (e: Error) => toast({ title: "Erreur", description: e.message, variant: "destructive" }),
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from("photos").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["gallery-photos"] });
-      toast({ title: "Photo supprimée" });
-    },
-  });
-
-  const resetForm = () => {
-    setForm({ title: "", description: "", category_id: "" });
-    setFile(null);
-    setEditId(null);
-    setOpen(false);
-  };
-
-  const openEdit = (photo: any) => {
-    setForm({ 
-      title: photo.title, 
-      description: photo.description || "", 
-      category_id: photo.category_id || ""
-    });
-    setEditId(photo.id);
-    setOpen(true);
-  };
 
   return (
     <section id="gallery" className="py-20 md:py-28 bg-secondary">
@@ -148,41 +74,39 @@ const Gallery = () => {
             Galerie
           </h2>
           <p className="text-secondary-foreground/60 mt-4 max-w-lg mx-auto">
-            Découvrez quelques-uns de nos projets récents.
+            Découvrez nos réalisations ou explorez par service.
           </p>
         </motion.div>
 
-        {/* Category filter */}
-        <div className="flex justify-center mb-8">
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+        {/* Filtre par service */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+          <Select value={selectedService} onValueChange={setSelectedService}>
             <SelectTrigger className="w-64">
-              <SelectValue placeholder="Filtrer par catégorie" />
+              <SelectValue placeholder="Filtrer par service" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Toutes les catégories</SelectItem>
-              {categories?.map((category) => (
-                <SelectItem key={category.id} value={category.id}>
-                  {category.name}
+              <SelectItem value="all">Tous les services</SelectItem>
+              {services?.map((service) => (
+                <SelectItem key={service.id} value={service.id}>
+                  {service.title}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-        </div>
-
-        {/* Admin controls */}
-        <div className="flex justify-end gap-2 mb-6">
-          <Button variant="outline" size="sm" onClick={() => navigate("/auth")}>
-            <LogIn className="w-4 h-4 mr-2" /> Admin
-          </Button>
+          <p className="text-sm text-secondary-foreground/60">
+            Ou cliquez sur un service dans la section Services pour voir ses réalisations.
+          </p>
         </div>
 
         {photosLoading ? (
           <p className="text-center text-muted-foreground">Chargement...</p>
         ) : !photos?.length && !videos?.length ? (
-          <p className="text-center text-secondary-foreground/60">Aucun contenu pour le moment.</p>
+          <p className="text-center text-secondary-foreground/60 py-12">
+            Aucun contenu pour le moment. Visitez nos services pour découvrir nos réalisations.
+          </p>
         ) : (
           <>
-            {photos?.length ? (
+            {photos && photos.length > 0 && (
               <>
                 <h3 className="text-xl font-display font-semibold text-secondary-foreground mb-6">Photos</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
@@ -206,20 +130,26 @@ const Gallery = () => {
                       </div>
                       <div className="p-4">
                         <h3 className="font-display font-semibold text-card-foreground">{photo.title}</h3>
-                        {photo.description && <p className="text-sm text-muted-foreground mt-1">{photo.description}</p>}
-                        {photo.categories?.name && (
-                          <span className="inline-block mt-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                            {photo.categories.name}
-                          </span>
+                        {photo.description && (
+                          <p className="text-sm text-muted-foreground mt-1">{photo.description}</p>
+                        )}
+                        {photo.services && (
+                          <Link
+                            to={`/services/${photo.services.id}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-block mt-2 text-xs bg-primary/10 text-primary hover:bg-primary/20 px-2 py-1 rounded-full transition-colors"
+                          >
+                            {photo.services.title}
+                          </Link>
                         )}
                       </div>
                     </motion.div>
                   ))}
                 </div>
               </>
-            ) : null}
+            )}
 
-            {videos?.length ? (
+            {videos && videos.length > 0 && (
               <>
                 <h3 className="text-xl font-display font-semibold text-secondary-foreground mb-6">Vidéos</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -243,20 +173,27 @@ const Gallery = () => {
                       </div>
                       <div className="p-4">
                         <h3 className="font-display font-semibold text-card-foreground">{video.title}</h3>
-                        {video.description && <p className="text-sm text-muted-foreground mt-1">{video.description}</p>}
-                        {video.categories?.name && (
-                          <span className="inline-block mt-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                            {video.categories.name}
-                          </span>
+                        {video.description && (
+                          <p className="text-sm text-muted-foreground mt-1">{video.description}</p>
+                        )}
+                        {video.services && (
+                          <Link
+                            to={`/services/${video.services.id}`}
+                            className="inline-block mt-2 text-xs bg-primary/10 text-primary hover:bg-primary/20 px-2 py-1 rounded-full transition-colors"
+                          >
+                            {video.services.title}
+                          </Link>
                         )}
                       </div>
                     </motion.div>
                   ))}
                 </div>
               </>
-            ) : videosLoading ? (
+            )}
+
+            {videosLoading && (
               <p className="text-center text-muted-foreground mt-8">Chargement des vidéos...</p>
-            ) : null}
+            )}
           </>
         )}
 

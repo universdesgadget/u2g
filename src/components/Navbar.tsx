@@ -1,38 +1,46 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { CONTACT } from "@/lib/constants";
 
 const navLinks = [
-  { label: "Accueil", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Galerie", href: "#gallery" },
-  { label: "Contact", href: "#contact" },
-  { label: "Localisation", href: "#location" },
+  { label: "Accueil", href: "/", hash: "#home" },
+  { label: "Services", href: "/", hash: "#services" },
+  { label: "Galerie", href: "/", hash: "#gallery" },
+  { label: "Témoignages", href: "/", hash: "#temoignages" },
+  { label: "À propos", href: "/a-propos" },
+  { label: "Contact", href: "/", hash: "#contact" },
+  { label: "Localisation", href: "/", hash: "#location" },
 ];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const getLinkHref = (link: { href: string; hash?: string }) =>
+    link.hash ? `${link.href}${link.hash}` : link.href;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-border/20">
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
-        <a href="#home" className="flex items-center gap-3 text-lg font-display font-bold tracking-tight">
+        <Link to="/" className="flex items-center gap-3 text-lg font-display font-bold tracking-tight">
           <img src="/logo.png" alt="Univers des Gadgets" className="h-9 md:h-10 w-auto object-contain" />
           <span className="text-gradient-gold">UNIVERS <span className="text-secondary-foreground">DES GADGETS</span></span>
-        </a>
+        </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
+            <Link
+              key={link.href + (link.hash || "")}
+              to={getLinkHref(link)}
+              onClick={() => isOpen && setIsOpen(false)}
               className="text-sm font-medium text-secondary-foreground/70 hover:text-primary transition-colors"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <a href={`tel:${CONTACT.phoneTel}`}>
             <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-gold">
@@ -62,14 +70,14 @@ const Navbar = () => {
           >
             <div className="px-4 py-4 space-y-3">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
+                <Link
+                  key={link.href + (link.hash || "")}
+                  to={getLinkHref(link)}
                   onClick={() => setIsOpen(false)}
                   className="block text-sm font-medium text-secondary-foreground/70 hover:text-primary transition-colors py-2"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               <a href={`tel:${CONTACT.phoneTel}`}>
                 <Button size="sm" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-2">

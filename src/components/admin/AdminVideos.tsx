@@ -15,18 +15,18 @@ const AdminVideos = () => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ title: "", description: "", category_id: "" });
+  const [form, setForm] = useState({ title: "", description: "", service_id: "" });
   const [file, setFile] = useState<File | null>(null);
 
-  const { data: categories } = useQuery({
-    queryKey: ["categories"],
+  const { data: services } = useQuery({
+    queryKey: ["services-list"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("categories")
-        .select("id, name")
+        .from("services")
+        .select("id, title")
         .eq("is_active", true)
         .order("sort_order", { ascending: true })
-        .order("name", { ascending: true });
+        .order("title", { ascending: true });
       if (error) throw error;
       return data;
     },
@@ -37,7 +37,7 @@ const AdminVideos = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("videos")
-        .select("*, categories(id, name)")
+        .select("*, services(id, title)")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -60,14 +60,18 @@ const AdminVideos = () => {
         video_url = await uploadFile(file);
       }
 
+      const payload = {
+        ...form,
+        service_id: form.service_id || null,
+      };
       if (editId) {
-        const updates: any = { ...form };
+        const updates: Record<string, unknown> = { ...payload };
         if (video_url) updates.video_url = video_url;
         const { error } = await supabase.from("videos").update(updates).eq("id", editId);
         if (error) throw error;
       } else {
         if (!video_url) throw new Error("Vidéo requise");
-        const { error } = await supabase.from("videos").insert({ ...form, video_url });
+        const { error } = await supabase.from("videos").insert({ ...payload, video_url });
         if (error) throw error;
       }
     },
@@ -91,7 +95,7 @@ const AdminVideos = () => {
   });
 
   const resetForm = () => {
-    setForm({ title: "", description: "", category_id: "" });
+    setForm({ title: "", description: "", service_id: "" });
     setFile(null);
     setEditId(null);
     setOpen(false);
@@ -101,7 +105,7 @@ const AdminVideos = () => {
     setForm({ 
       title: video.title, 
       description: video.description || "", 
-      category_id: video.category_id || ""
+      service_id: video.service_id || ""
     });
     setEditId(video.id);
     setOpen(true);
@@ -132,15 +136,15 @@ const AdminVideos = () => {
                 <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
               </div>
               <div className="space-y-2">
-                <Label>Catégorie</Label>
-                <Select value={form.category_id} onValueChange={(value) => setForm({ ...form, category_id: value })}>
+                <Label>Service</Label>
+                <Select value={form.service_id} onValueChange={(value) => setForm({ ...form, service_id: value })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner une catégorie" />
+                    <SelectValue placeholder="Sélectionner un service" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories?.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
+                    {services?.map((service) => (
+                      <SelectItem key={service.id} value={service.id}>
+                        {service.title}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -169,23 +173,25 @@ const AdminVideos = () => {
               <div className="aspect-video">
                 <video src={video.video_url} className="w-full h-full object-cover" controls />
               </div>
-              <CardContent className="p-4">
-                <h3 className="font-display font-semibold text-card-foreground">{video.title}</h3>
-                {video.description && <p className="text-sm text-muted-foreground mt-1">{video.description}</p>}
-                {video.categories?.name && (
-                  <span className="inline-block mt-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    {video.categories.name}
-                  </span>
-                )}
+              <CardContent className="p-4 flex flex-col">
+                <div className="flex-1">
+                  <h3 className="font-display font-semibold text-card-foreground">{video.title}</h3>
+                  {video.description && <p className="text-sm text-muted-foreground mt-1">{video.description}</p>}
+                  {video.services?.title && (
+                    <span className="inline-block mt-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
+                      {video.services.title}
+                    </span>
+                  )}
+                </div>
+                <div className="flex gap-1 mt-3">
+                  <Button variant="ghost" size="icon" onClick={() => openEdit(video)}>
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(video.id)}>
+                    <Trash2 className="w-4 h-4 text-destructive" />
+                  </Button>
+                </div>
               </CardContent>
-              <div className="flex gap-1">
-                <Button variant="ghost" size="icon" onClick={() => openEdit(video)}>
-                  <Pencil className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(video.id)}>
-                  <Trash2 className="w-4 h-4 text-destructive" />
-                </Button>
-              </div>
             </Card>
           ))}
         </div>
