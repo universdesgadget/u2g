@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { downloadFile } from "@/lib/download";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import MediaCard from "@/components/MediaCard";
 
@@ -170,17 +172,14 @@ const Gallery = () => {
             {selectedPhoto && (
               <div className="relative">
                 <img src={selectedPhoto} alt="Photo agrandie" className="w-full h-auto rounded" />
-                <a
-                  href={selectedPhoto}
-                  download="photo.jpg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute top-2 right-2"
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="absolute top-2 right-2 shadow-lg"
+                  onClick={() => downloadFile(selectedPhoto, "photo.jpg")}
                 >
-                  <button className="px-4 py-2 bg-white/90 rounded-md text-sm font-medium hover:bg-white shadow-lg">
-                    Télécharger
-                  </button>
-                </a>
+                  Télécharger
+                </Button>
               </div>
             )}
           </DialogContent>

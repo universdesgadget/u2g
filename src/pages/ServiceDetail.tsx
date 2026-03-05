@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MediaCard from "@/components/MediaCard";
+import { downloadFile } from "@/lib/download";
 import { useState } from "react";
 
 const ServiceDetail = () => {
@@ -188,17 +189,14 @@ const ServiceDetail = () => {
                 alt="Photo agrandie"
                 className="w-full h-auto rounded"
               />
-              <a
-                href={selectedPhoto}
-                download="photo.jpg"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute top-2 right-2"
+              <Button
+                size="sm"
+                variant="secondary"
+                className="absolute top-2 right-2 shadow-lg"
+                onClick={() => downloadFile(selectedPhoto, "photo.jpg")}
               >
-                <Button size="sm" variant="secondary">
-                  Télécharger
-                </Button>
-              </a>
+                Télécharger
+              </Button>
             </div>
           )}
         </DialogContent>

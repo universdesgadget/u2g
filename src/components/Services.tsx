@@ -19,7 +19,6 @@ const Services = () => {
     },
   });
 
-  // Fallback si pas de services en DB (comportement par défaut)
   const displayServices = services && services.length > 0
     ? services
     : [
@@ -51,7 +50,7 @@ const Services = () => {
         {isLoading ? (
           <p className="text-center text-muted-foreground py-12">Chargement des services...</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {displayServices.map((service, i) => (
               <Link key={service.id} to={`/services/${service.id}`}>
                 <motion.div
@@ -59,23 +58,24 @@ const Services = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="group relative alibaba-image-card rounded-lg shadow-elegant bg-card cursor-pointer hover:shadow-gold transition-shadow border border-border/50"
+                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                  className="group relative alibaba-image-card rounded-2xl overflow-hidden bg-card cursor-pointer border border-border/40 shadow-lg hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30 transition-all duration-300"
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-[4/3] overflow-hidden rounded-t-2xl">
                     <img
                       src={service.image_url || "/og-image.jpg"}
                       alt={service.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6">
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
                       <span className="flex items-center gap-2 text-white font-medium">
                         Voir les réalisations
-                        <ArrowRight className="w-4 h-4" />
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 rounded-b-2xl bg-card">
                     <h3 className="text-lg font-display font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">
                       {service.title}
                     </h3>

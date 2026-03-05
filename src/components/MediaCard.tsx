@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Download, ZoomIn } from "lucide-react";
+import { Download, ZoomIn, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { downloadFile } from "@/lib/download";
 
 interface MediaCardProps {
   type: "photo" | "video";
@@ -12,8 +14,16 @@ interface MediaCardProps {
 }
 
 const MediaCard = ({ type, src, title, description, onPreview, className = "" }: MediaCardProps) => {
+  const [downloading, setDownloading] = useState(false);
   const ext = type === "photo" ? "jpg" : "mp4";
   const downloadFilename = `${title.replace(/\s+/g, "-")}.${ext}`;
+
+  const handleDownload = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDownloading(true);
+    await downloadFile(src, downloadFilename);
+    setDownloading(false);
+  };
 
   return (
     <motion.div
@@ -45,16 +55,15 @@ const MediaCard = ({ type, src, title, description, onPreview, className = "" }:
                   <ZoomIn className="w-4 h-4" />
                 </Button>
               )}
-              <a href={src} download={downloadFilename} target="_blank" rel="noopener noreferrer">
-                <Button
-                  size="icon"
-                  variant="secondary"
-                  className="rounded-full opacity-90"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Download className="w-4 h-4" />
-                </Button>
-              </a>
+              <Button
+                size="icon"
+                variant="secondary"
+                className="rounded-full opacity-90"
+                onClick={handleDownload}
+                disabled={downloading}
+              >
+                {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+              </Button>
             </div>
           </>
         ) : (
@@ -66,17 +75,16 @@ const MediaCard = ({ type, src, title, description, onPreview, className = "" }:
               controls
               onClick={(e) => e.stopPropagation()}
             />
-            <a
-              href={src}
-              download={downloadFilename}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute bottom-2 right-2"
+            <Button
+              size="sm"
+              variant="secondary"
+              className="absolute bottom-2 right-2 shadow-lg"
+              onClick={handleDownload}
+              disabled={downloading}
             >
-              <Button size="sm" variant="secondary" className="shadow-lg">
-                <Download className="w-4 h-4 mr-1" /> Télécharger
-              </Button>
-            </a>
+              {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4 mr-1" />}
+              Télécharger
+            </Button>
           </>
         )}
       </div>
@@ -88,11 +96,14 @@ const MediaCard = ({ type, src, title, description, onPreview, className = "" }:
           )}
         </div>
         {type === "video" && (
-          <a href={src} download={downloadFilename} target="_blank" rel="noopener noreferrer" className="shrink-0">
-            <Button size="icon" variant="ghost">
-              <Download className="w-4 h-4" />
-            </Button>
-          </a>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleDownload}
+            disabled={downloading}
+          >
+            {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+          </Button>
         )}
       </div>
     </motion.div>

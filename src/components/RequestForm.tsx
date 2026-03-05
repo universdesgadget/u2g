@@ -6,9 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { CONTACT, CONTACT_BG } from "@/lib/constants";
 
-const serviceOptions = [
+const defaultServiceOptions = [
   "Impression Laser",
   "Personnalisation d'Objets",
   "Impression de Bâches",
@@ -26,6 +28,20 @@ const RequestForm = () => {
     description: "",
   });
   const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  const { data: services } = useQuery({
+    queryKey: ["public-services"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("services")
+        .select("id, title")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+  });
+  const serviceOptions = services?.map((s) => s.title) ?? defaultServiceOptions;
 
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -59,18 +75,18 @@ const RequestForm = () => {
       id="contact"
       className="relative py-20 md:py-28 overflow-hidden"
     >
-      {/* Image de fond avec overlay plus foncé pour contraste texte */}
+      {/* Image de fond — chemins: public/images/contact-bg.jpg */}
       <div className="absolute inset-0">
         <img
           src={CONTACT_BG}
           alt=""
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
           aria-hidden
           onError={(e) => {
             (e.target as HTMLImageElement).src = "/og-image.jpg";
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary/95 via-secondary/92 to-secondary/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary/95 via-secondary/90 to-secondary/95" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -160,8 +176,8 @@ const RequestForm = () => {
             transition={{ type: "spring", stiffness: 100 }}
             className="relative"
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 via-primary/20 to-primary/40 rounded-2xl blur-sm opacity-75" />
-            <div className="relative bg-white/95 dark:bg-background/95 backdrop-blur-xl rounded-2xl p-8 md:p-10 shadow-2xl border border-white/30">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 via-primary/30 to-primary/50 rounded-2xl blur opacity-60" />
+            <div className="relative bg-white/98 dark:bg-background/98 backdrop-blur-xl rounded-2xl p-8 md:p-10 shadow-2xl border-2 border-primary/20">
               <div className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <motion.div
@@ -176,7 +192,7 @@ const RequestForm = () => {
                       onFocus={() => setFocusedField("name")}
                       onBlur={() => setFocusedField(null)}
                       maxLength={100}
-                      className="h-12 border-2 focus:border-primary transition-colors"
+                      className="h-12 border-2 border-muted focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl transition-all"
                     />
                   </motion.div>
                   <motion.div
@@ -191,7 +207,7 @@ const RequestForm = () => {
                       onFocus={() => setFocusedField("phone")}
                       onBlur={() => setFocusedField(null)}
                       maxLength={20}
-                      className="h-12 border-2 focus:border-primary transition-colors"
+                      className="h-12 border-2 border-muted focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl transition-all"
                     />
                   </motion.div>
                 </div>
@@ -209,14 +225,14 @@ const RequestForm = () => {
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
                     maxLength={255}
-                    className="h-12 border-2 focus:border-primary transition-colors"
+                    className="h-12 border-2 border-muted focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl transition-all"
                   />
                 </motion.div>
 
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">Type de service *</label>
                   <Select onValueChange={(val) => handleChange("service", val)}>
-                    <SelectTrigger className="h-12 border-2 focus:border-primary">
+                    <SelectTrigger className="h-12 border-2 border-muted focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl">
                       <SelectValue placeholder="Choisir un service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -240,7 +256,7 @@ const RequestForm = () => {
                     onFocus={() => setFocusedField("description")}
                     onBlur={() => setFocusedField(null)}
                     maxLength={1000}
-                    className="border-2 focus:border-primary transition-colors resize-none"
+                    className="border-2 border-muted focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl transition-all resize-none"
                   />
                 </motion.div>
 
