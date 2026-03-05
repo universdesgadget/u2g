@@ -59,13 +59,13 @@ const Services = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="group relative overflow-hidden rounded-lg shadow-elegant bg-card cursor-pointer hover:shadow-gold transition-shadow"
+                  className="group relative alibaba-image-card rounded-lg shadow-elegant bg-card cursor-pointer hover:shadow-gold transition-shadow border border-border/50"
                 >
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={service.image_url || "/og-image.jpg"}
                       alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6">

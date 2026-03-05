@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import MediaCard from "@/components/MediaCard";
 
 const Gallery = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
@@ -78,7 +79,6 @@ const Gallery = () => {
           </p>
         </motion.div>
 
-        {/* Filtre par service */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
           <Select value={selectedService} onValueChange={setSelectedService}>
             <SelectTrigger className="w-64">
@@ -94,7 +94,7 @@ const Gallery = () => {
             </SelectContent>
           </Select>
           <p className="text-sm text-secondary-foreground/60">
-            Ou cliquez sur un service dans la section Services pour voir ses réalisations.
+            Cliquez sur un service dans la section Services pour voir uniquement ses réalisations.
           </p>
         </div>
 
@@ -109,41 +109,25 @@ const Gallery = () => {
             {photos && photos.length > 0 && (
               <>
                 <h3 className="text-xl font-display font-semibold text-secondary-foreground mb-6">Photos</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-                  {photos.map((photo, i) => (
-                    <motion.div
-                      key={photo.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.05 }}
-                      className="group relative overflow-hidden rounded-lg shadow-elegant bg-card cursor-pointer"
-                      onClick={() => setSelectedPhoto(photo.image_url)}
-                    >
-                      <div className="aspect-[4/3] overflow-hidden">
-                        <img
-                          src={photo.image_url}
-                          alt={photo.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-display font-semibold text-card-foreground">{photo.title}</h3>
-                        {photo.description && (
-                          <p className="text-sm text-muted-foreground mt-1">{photo.description}</p>
-                        )}
-                        {photo.services && (
-                          <Link
-                            to={`/services/${photo.services.id}`}
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-block mt-2 text-xs bg-primary/10 text-primary hover:bg-primary/20 px-2 py-1 rounded-full transition-colors"
-                          >
-                            {photo.services.title}
-                          </Link>
-                        )}
-                      </div>
-                    </motion.div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
+                  {photos.map((photo) => (
+                    <div key={photo.id}>
+                      <MediaCard
+                        type="photo"
+                        src={photo.image_url}
+                        title={photo.title}
+                        description={photo.description || undefined}
+                        onPreview={() => setSelectedPhoto(photo.image_url)}
+                      />
+                      {photo.services && (
+                        <Link
+                          to={`/services/${photo.services.id}`}
+                          className="inline-block mt-2 text-xs text-primary hover:underline"
+                        >
+                          Voir le service: {photo.services.title}
+                        </Link>
+                      )}
+                    </div>
                   ))}
                 </div>
               </>
@@ -152,40 +136,24 @@ const Gallery = () => {
             {videos && videos.length > 0 && (
               <>
                 <h3 className="text-xl font-display font-semibold text-secondary-foreground mb-6">Vidéos</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {videos.map((video, i) => (
-                    <motion.div
-                      key={video.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.05 }}
-                      className="group relative overflow-hidden rounded-lg shadow-elegant bg-card"
-                    >
-                      <div className="aspect-video overflow-hidden bg-muted">
-                        <video
-                          src={video.video_url}
-                          poster={video.thumbnail_url || undefined}
-                          controls
-                          className="w-full h-full object-cover"
-                          preload="metadata"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-display font-semibold text-card-foreground">{video.title}</h3>
-                        {video.description && (
-                          <p className="text-sm text-muted-foreground mt-1">{video.description}</p>
-                        )}
-                        {video.services && (
-                          <Link
-                            to={`/services/${video.services.id}`}
-                            className="inline-block mt-2 text-xs bg-primary/10 text-primary hover:bg-primary/20 px-2 py-1 rounded-full transition-colors"
-                          >
-                            {video.services.title}
-                          </Link>
-                        )}
-                      </div>
-                    </motion.div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {videos.map((video) => (
+                    <div key={video.id}>
+                      <MediaCard
+                        type="video"
+                        src={video.video_url}
+                        title={video.title}
+                        description={video.description || undefined}
+                      />
+                      {video.services && (
+                        <Link
+                          to={`/services/${video.services.id}`}
+                          className="inline-block mt-2 text-xs text-primary hover:underline"
+                        >
+                          Voir le service: {video.services.title}
+                        </Link>
+                      )}
+                    </div>
                   ))}
                 </div>
               </>
@@ -197,11 +165,23 @@ const Gallery = () => {
           </>
         )}
 
-        {/* Lightbox */}
         <Dialog open={!!selectedPhoto} onOpenChange={() => setSelectedPhoto(null)}>
           <DialogContent className="max-w-4xl p-2">
             {selectedPhoto && (
-              <img src={selectedPhoto} alt="Photo agrandie" className="w-full h-auto rounded" />
+              <div className="relative">
+                <img src={selectedPhoto} alt="Photo agrandie" className="w-full h-auto rounded" />
+                <a
+                  href={selectedPhoto}
+                  download="photo.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-2 right-2"
+                >
+                  <button className="px-4 py-2 bg-white/90 rounded-md text-sm font-medium hover:bg-white shadow-lg">
+                    Télécharger
+                  </button>
+                </a>
+              </div>
             )}
           </DialogContent>
         </Dialog>

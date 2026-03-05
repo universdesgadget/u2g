@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -59,7 +59,7 @@ const RequestForm = () => {
       id="contact"
       className="relative py-20 md:py-28 overflow-hidden"
     >
-      {/* Image de fond */}
+      {/* Image de fond avec overlay plus foncé pour contraste texte */}
       <div className="absolute inset-0">
         <img
           src={CONTACT_BG}
@@ -70,170 +70,204 @@ const RequestForm = () => {
             (e.target as HTMLImageElement).src = "/og-image.jpg";
           }}
         />
-        <div className="absolute inset-0 bg-secondary/92" />
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary/95 via-secondary/92 to-secondary/95" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
+        {/* En-tête — texte blanc pour visibilité maximale */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <span className="text-sm font-medium text-primary uppercase tracking-widest">
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="inline-block text-sm font-medium text-primary uppercase tracking-widest mb-3"
+          >
             Contactez-nous
-          </span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-secondary-foreground mt-3">
+          </motion.span>
+          <h2 className="text-3xl md:text-5xl font-display font-bold text-white mt-2 drop-shadow-lg">
             Demandez un Devis
           </h2>
-          <p className="text-secondary-foreground/80 mt-4 max-w-xl mx-auto">
+          <p className="text-white/90 mt-4 max-w-xl mx-auto text-lg drop-shadow-md">
             Remplissez le formulaire et nous vous répondrons dans les plus brefs délais.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start max-w-5xl mx-auto">
-          {/* Infos contact avec effet */}
+        <div className="grid lg:grid-cols-2 gap-12 items-stretch max-w-6xl mx-auto">
+          {/* Colonne gauche — infos contact */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            transition={{ type: "spring", stiffness: 100 }}
+            className="flex flex-col"
           >
-            <div className="bg-background/10 backdrop-blur-md rounded-xl p-6 border border-border/30 hover:border-primary/40 transition-colors">
-              <p className="text-secondary-foreground/90 mb-6">
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/20 shadow-2xl h-full flex flex-col justify-center">
+              <p className="text-white/90 text-lg mb-8 leading-relaxed">
                 Vous pouvez aussi nous contacter directement via WhatsApp ou par email.
                 Notre équipe est à votre écoute pour concrétiser vos projets.
               </p>
-              <div className="space-y-4 text-secondary-foreground/80">
-                <p className="flex items-center gap-3">
-                  <span className="text-2xl">📍</span>
+              <div className="space-y-6">
+                <motion.div
+                  whileHover={{ x: 8 }}
+                  className="flex items-center gap-4 text-white/90"
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
                   <span>{CONTACT.address}</span>
-                </p>
-                <p className="flex items-center gap-3">
-                  <span className="text-2xl">📞</span>
-                  <a href={`tel:${CONTACT.phoneTel}`} className="hover:text-primary transition-colors">
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 8 }}
+                  className="flex items-center gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5 text-primary" />
+                  </div>
+                  <a href={`tel:${CONTACT.phoneTel}`} className="text-white/90 hover:text-primary transition-colors">
                     {CONTACT.phoneDisplay}
                   </a>
-                </p>
-                <p className="flex items-center gap-3">
-                  <span className="text-2xl">💬</span>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 8 }}
+                  className="flex items-center gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-primary" />
+                  </div>
                   <a
                     href={`https://wa.me/${CONTACT.whatsappNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
+                    className="text-white/90 hover:text-primary transition-colors"
                   >
                     WhatsApp: {CONTACT.whatsappDisplay}
                   </a>
-                </p>
+                </motion.div>
               </div>
             </div>
           </motion.div>
 
-          {/* Formulaire avec effets */}
+          {/* Colonne droite — formulaire */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-background/95 backdrop-blur-md rounded-xl p-6 md:p-8 shadow-elegant border border-border/30"
+            transition={{ type: "spring", stiffness: 100 }}
+            className="relative"
           >
-            <div className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-4">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 via-primary/20 to-primary/40 rounded-2xl blur-sm opacity-75" />
+            <div className="relative bg-white/95 dark:bg-background/95 backdrop-blur-xl rounded-2xl p-8 md:p-10 shadow-2xl border border-white/30">
+              <div className="space-y-6">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <motion.div
+                    animate={focusedField === "name" ? { scale: 1.02, y: -2 } : { scale: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <label className="text-sm font-medium text-foreground mb-2 block">Nom *</label>
+                    <Input
+                      placeholder="Votre nom"
+                      value={form.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                      onFocus={() => setFocusedField("name")}
+                      onBlur={() => setFocusedField(null)}
+                      maxLength={100}
+                      className="h-12 border-2 focus:border-primary transition-colors"
+                    />
+                  </motion.div>
+                  <motion.div
+                    animate={focusedField === "phone" ? { scale: 1.02, y: -2 } : { scale: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <label className="text-sm font-medium text-foreground mb-2 block">Téléphone *</label>
+                    <Input
+                      placeholder="+237..."
+                      value={form.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
+                      onFocus={() => setFocusedField("phone")}
+                      onBlur={() => setFocusedField(null)}
+                      maxLength={20}
+                      className="h-12 border-2 focus:border-primary transition-colors"
+                    />
+                  </motion.div>
+                </div>
+
                 <motion.div
-                  animate={focusedField === "name" ? { scale: 1.02 } : { scale: 1 }}
+                  animate={focusedField === "email" ? { scale: 1.02, y: -2 } : { scale: 1, y: 0 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Nom *</label>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Email</label>
                   <Input
-                    placeholder="Votre nom"
-                    value={form.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    onFocus={() => setFocusedField("name")}
+                    type="email"
+                    placeholder="votre@email.com"
+                    value={form.email}
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
-                    maxLength={100}
-                    className="transition-all"
+                    maxLength={255}
+                    className="h-12 border-2 focus:border-primary transition-colors"
                   />
                 </motion.div>
+
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Type de service *</label>
+                  <Select onValueChange={(val) => handleChange("service", val)}>
+                    <SelectTrigger className="h-12 border-2 focus:border-primary">
+                      <SelectValue placeholder="Choisir un service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {serviceOptions.map((s) => (
+                        <SelectItem key={s} value={s}>{s}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <motion.div
-                  animate={focusedField === "phone" ? { scale: 1.02 } : { scale: 1 }}
+                  animate={focusedField === "description" ? { scale: 1.01 } : { scale: 1 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <label className="text-sm font-medium text-foreground mb-1.5 block">Téléphone *</label>
-                  <Input
-                    placeholder="+237..."
-                    value={form.phone}
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    onFocus={() => setFocusedField("phone")}
+                  <label className="text-sm font-medium text-foreground mb-2 block">Description</label>
+                  <Textarea
+                    placeholder="Décrivez votre projet..."
+                    rows={4}
+                    value={form.description}
+                    onChange={(e) => handleChange("description", e.target.value)}
+                    onFocus={() => setFocusedField("description")}
                     onBlur={() => setFocusedField(null)}
-                    maxLength={20}
+                    maxLength={1000}
+                    className="border-2 focus:border-primary transition-colors resize-none"
                   />
                 </motion.div>
-              </div>
 
-              <motion.div
-                animate={focusedField === "email" ? { scale: 1.02 } : { scale: 1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <label className="text-sm font-medium text-foreground mb-1.5 block">Email</label>
-                <Input
-                  type="email"
-                  placeholder="votre@email.com"
-                  value={form.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  onFocus={() => setFocusedField("email")}
-                  onBlur={() => setFocusedField(null)}
-                  maxLength={255}
-                />
-              </motion.div>
-
-              <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">Type de service *</label>
-                <Select onValueChange={(val) => handleChange("service", val)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choisir un service" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {serviceOptions.map((s) => (
-                      <SelectItem key={s} value={s}>{s}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">Description</label>
-                <Textarea
-                  placeholder="Décrivez votre projet..."
-                  rows={4}
-                  value={form.description}
-                  onChange={(e) => handleChange("description", e.target.value)}
-                  onFocus={() => setFocusedField("description")}
-                  onBlur={() => setFocusedField(null)}
-                  maxLength={1000}
-                />
-              </div>
-
-              <motion.div
-                className="flex flex-col sm:flex-row gap-3 pt-2"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <Button
-                  onClick={handleEmail}
-                  className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 shadow-gold hover:shadow-gold/50 transition-shadow"
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-4 pt-2"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
                 >
-                  <Send className="w-4 h-4 mr-2" />
-                  Envoyer par Email
-                </Button>
-                <Button
-                  onClick={handleWhatsApp}
-                  className="flex-1 bg-[hsl(142,70%,35%)] text-white hover:bg-[hsl(142,70%,30%)]"
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Envoyer via WhatsApp
-                </Button>
-              </motion.div>
+                  <Button
+                    onClick={handleEmail}
+                    size="lg"
+                    className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 shadow-gold hover:shadow-gold/70 transition-all hover:scale-[1.02]"
+                  >
+                    <Send className="w-4 h-4 mr-2" />
+                    Envoyer par Email
+                  </Button>
+                  <Button
+                    onClick={handleWhatsApp}
+                    size="lg"
+                    className="flex-1 bg-[hsl(142,70%,35%)] text-white hover:bg-[hsl(142,70%,30%)] transition-all hover:scale-[1.02]"
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Envoyer via WhatsApp
+                  </Button>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         </div>

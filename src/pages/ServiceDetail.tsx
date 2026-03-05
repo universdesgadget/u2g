@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MediaCard from "@/components/MediaCard";
 import { useState } from "react";
 
 const ServiceDetail = () => {
@@ -18,7 +19,7 @@ const ServiceDetail = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("services")
-        .select("*")
+        .select("id, title, description")
         .eq("id", id)
         .single();
       if (error) throw error;
@@ -74,8 +75,8 @@ const ServiceDetail = () => {
         <div className="pt-24 pb-16 container mx-auto px-4 text-center">
           <h1 className="text-2xl font-display font-bold mb-4">Service introuvable</h1>
           <Button asChild variant="outline">
-            <Link to="/">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Retour à l'accueil
+            <Link to="/services">
+              <ArrowLeft className="w-4 h-4 mr-2" /> Retour aux services
             </Link>
           </Button>
         </div>
@@ -92,38 +93,28 @@ const ServiceDetail = () => {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           <Button variant="ghost" size="sm" asChild className="mb-8">
-            <Link to="/#services" className="flex items-center gap-2">
+            <Link to="/services" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" /> Retour aux services
             </Link>
           </Button>
 
+          {/* En-tête sans image du service */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-12"
           >
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              {service.image_url && (
-                <img
-                  src={service.image_url}
-                  alt={service.title}
-                  className="w-full md:w-80 h-56 object-cover rounded-lg shadow-elegant"
-                />
-              )}
-              <div>
-                <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-                  {service.title}
-                </h1>
-                {service.description && (
-                  <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                    {service.description}
-                  </p>
-                )}
-                <Button asChild className="mt-6">
-                  <a href="/#contact">Demander un devis</a>
-                </Button>
-              </div>
-            </div>
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+              {service.title}
+            </h1>
+            {service.description && (
+              <p className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
+                {service.description}
+              </p>
+            )}
+            <Button asChild>
+              <Link to="/contact">Demander un devis</Link>
+            </Button>
           </motion.div>
 
           {hasContent ? (
@@ -139,34 +130,15 @@ const ServiceDetail = () => {
                     Photos
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {photos.map((photo, i) => (
-                      <motion.div
+                    {photos.map((photo) => (
+                      <MediaCard
                         key={photo.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.05 }}
-                        className="group relative overflow-hidden rounded-lg shadow-elegant bg-card cursor-pointer"
-                        onClick={() => setSelectedPhoto(photo.image_url)}
-                      >
-                        <div className="aspect-[4/3] overflow-hidden">
-                          <img
-                            src={photo.image_url}
-                            alt={photo.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div className="p-4">
-                          <h3 className="font-display font-semibold text-card-foreground">
-                            {photo.title}
-                          </h3>
-                          {photo.description && (
-                            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                              {photo.description}
-                            </p>
-                          )}
-                        </div>
-                      </motion.div>
+                        type="photo"
+                        src={photo.image_url}
+                        title={photo.title}
+                        description={photo.description || undefined}
+                        onPreview={() => setSelectedPhoto(photo.image_url)}
+                      />
                     ))}
                   </div>
                 </motion.section>
@@ -182,34 +154,14 @@ const ServiceDetail = () => {
                     Vidéos
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {videos.map((video, i) => (
-                      <motion.div
+                    {videos.map((video) => (
+                      <MediaCard
                         key={video.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 + i * 0.05 }}
-                        className="overflow-hidden rounded-lg shadow-elegant bg-card"
-                      >
-                        <div className="aspect-video overflow-hidden bg-muted">
-                          <video
-                            src={video.video_url}
-                            poster={video.thumbnail_url || undefined}
-                            controls
-                            className="w-full h-full object-cover"
-                            preload="metadata"
-                          />
-                        </div>
-                        <div className="p-4">
-                          <h3 className="font-display font-semibold text-card-foreground">
-                            {video.title}
-                          </h3>
-                          {video.description && (
-                            <p className="text-sm text-muted-foreground mt-1">
-                              {video.description}
-                            </p>
-                          )}
-                        </div>
-                      </motion.div>
+                        type="video"
+                        src={video.video_url}
+                        title={video.title}
+                        description={video.description || undefined}
+                      />
                     ))}
                   </div>
                 </motion.section>
@@ -230,11 +182,24 @@ const ServiceDetail = () => {
       <Dialog open={!!selectedPhoto} onOpenChange={() => setSelectedPhoto(null)}>
         <DialogContent className="max-w-4xl p-2">
           {selectedPhoto && (
-            <img
-              src={selectedPhoto}
-              alt="Photo agrandie"
-              className="w-full h-auto rounded"
-            />
+            <div className="relative">
+              <img
+                src={selectedPhoto}
+                alt="Photo agrandie"
+                className="w-full h-auto rounded"
+              />
+              <a
+                href={selectedPhoto}
+                download="photo.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute top-2 right-2"
+              >
+                <Button size="sm" variant="secondary">
+                  Télécharger
+                </Button>
+              </a>
+            </div>
           )}
         </DialogContent>
       </Dialog>
