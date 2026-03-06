@@ -20,7 +20,7 @@ export type Database = {
           description: string | null
           id: string
           image_url: string
-          service_category: string | null
+          service_id: string | null
           title: string
           updated_at: string
         }
@@ -29,7 +29,7 @@ export type Database = {
           description?: string | null
           id?: string
           image_url: string
-          service_category?: string | null
+          service_id?: string | null
           title: string
           updated_at?: string
         }
@@ -38,7 +38,7 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string
-          service_category?: string | null
+          service_id?: string | null
           title?: string
           updated_at?: string
         }
@@ -121,7 +121,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
-          service_category: string | null
+          service_id: string | null
           thumbnail_url: string | null
           title: string
           updated_at: string
@@ -131,7 +131,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
-          service_category?: string | null
+          service_id?: string | null
           thumbnail_url?: string | null
           title: string
           updated_at?: string
@@ -141,7 +141,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
-          service_category?: string | null
+          service_id?: string | null
           thumbnail_url?: string | null
           title?: string
           updated_at?: string
