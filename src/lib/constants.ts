@@ -5,7 +5,7 @@ export const CONTACT = {
   phoneDisplay: "+237 697320490",
   phoneTel: "+237697320490",
   address: "2MRV+6V6, Douala — Cameroun",
-  email: "quentinzango470@gmail.com",
+  email: "universdesgadget@gmail.com",
 } as const;
 
 // Réseaux sociaux — URLs à adapter selon vos comptes
