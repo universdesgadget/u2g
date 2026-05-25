@@ -119,4 +119,164 @@
   .alibaba-image-card:hover img {
     transform: scale(1.15);
   }
+
+  /* Sphère 3D — logos partenaires */
+  .partner-sphere-scene {
+    perspective: 900px;
+  }
+
+  .partner-sphere-glow {
+    background: radial-gradient(
+      circle at 50% 50%,
+      hsl(var(--primary) / 0.15) 0%,
+      transparent 65%
+    );
+    animation: partner-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes partner-pulse {
+    0%,
+    100% {
+      opacity: 0.6;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  .partner-sphere-ring {
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    border: 1px solid hsl(var(--primary) / 0.25);
+    animation: partner-ring-spin 24s linear infinite;
+  }
+
+  .partner-sphere-ring--inner {
+    inset: 22%;
+    border-color: hsl(var(--primary) / 0.12);
+    animation-duration: 18s;
+    animation-direction: reverse;
+  }
+
+  @keyframes partner-ring-spin {
+    from {
+      transform: rotateX(72deg) rotateZ(0deg);
+    }
+    to {
+      transform: rotateX(72deg) rotateZ(360deg);
+    }
+  }
+
+  .partner-sphere-rotator {
+    transform-style: preserve-3d;
+    animation: partner-tilt 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes partner-tilt {
+    from {
+      transform: rotateX(8deg);
+    }
+    to {
+      transform: rotateX(18deg);
+    }
+  }
+
+  .partner-sphere-orbit {
+    position: relative;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    animation: partner-orbit-spin 28s linear infinite;
+  }
+
+  @keyframes partner-orbit-spin {
+    from {
+      transform: rotateY(0deg) rotateX(12deg);
+    }
+    to {
+      transform: rotateY(360deg) rotateX(12deg);
+    }
+  }
+
+  .partner-sphere-face {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -52px;
+    margin-top: -36px;
+    width: 104px;
+    height: 72px;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+  }
+
+  @keyframes partner-card-counter {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(-360deg);
+    }
+  }
+
+  .partner-sphere-card {
+    animation: partner-card-counter 28s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-lg);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .partner-sphere-card:hover {
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .mask-fade-edges {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+  }
+
+  .partner-marquee {
+    animation: partner-marquee-scroll 35s linear infinite;
+  }
+
+  .partner-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes partner-marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner-sphere-orbit,
+    .partner-sphere-card,
+    .partner-sphere-ring,
+    .partner-sphere-glow,
+    .partner-sphere-rotator,
+    .partner-marquee {
+      animation: none;
+    }
+  }
 }

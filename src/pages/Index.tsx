@@ -4,6 +4,7 @@ import HeroCarousel from "@/components/HeroCarousel";
 import Services from "@/components/Services";
 import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
+import TrustedPartners from "@/components/TrustedPartners";
 import RequestForm from "@/components/RequestForm";
 import MapSection from "@/components/MapSection";
 import Footer from "@/components/Footer";
@@ -31,6 +32,7 @@ const Index = ({ scrollTo }: { scrollTo?: keyof typeof sectionIds }) => {
       <Services />
       <Gallery />
       <Testimonials />
+      <TrustedPartners />
       <RequestForm />
       <MapSection />
       <Footer />

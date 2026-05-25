@@ -12,7 +12,7 @@ export const CONTACT = {
 export const SOCIAL = {
   facebook: "https://facebook.com/share/1CEUf7Mf4f/",
   instagram: "https://instagram.com/universdesgadgets",
-  tiktok: "https://tiktok.com/@universdesgadgets",
+  tiktok: "https://vm.tiktok.com/ZS9YfGfayMqSs-fk5jg/",
   whatsapp: `https://wa.me/${CONTACT.whatsappNumber}`,
 } as const;
 
@@ -78,6 +78,19 @@ export const TESTIMONIALS = [
     comment: "Depuis 3 ans, nous collaborons pour nos cartes de visite et supports marketing. Toujours professionnel.",
     image: "/images/temoignage-4.jpg",
   },
+] as const;
+
+// Logos partenaires — section « Ils nous font confiance »
+// À placer dans: public/images/partners/partner-1.png … partner-8.png
+export const PARTNER_LOGOS = [
+  { id: "partner-1", name: "Partenaire 1", logo: "/images/partners/partner-1.png" },
+  { id: "partner-2", name: "Partenaire 2", logo: "/images/partners/partner-2.png" },
+  { id: "partner-3", name: "Partenaire 3", logo: "/images/partners/partner-3.png" },
+  { id: "partner-4", name: "Partenaire 4", logo: "/images/partners/partner-4.png" },
+  { id: "partner-5", name: "Partenaire 5", logo: "/images/partners/partner-5.png" },
+  { id: "partner-6", name: "Partenaire 6", logo: "/images/partners/partner-6.png" },
+  { id: "partner-7", name: "Partenaire 7", logo: "/images/partners/partner-7.png" },
+  { id: "partner-8", name: "Partenaire 8", logo: "/images/partners/partner-8.png" },
 ] as const;
 
 // Image de fond pour la section Témoignages
