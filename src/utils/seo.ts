@@ -1,8 +1,9 @@
 // Utilitaires SEO pour le projet Univers des Gadgets
+import { SITE_URL } from "@/lib/constants";
 
 export const SEO_CONFIG = {
   siteName: "Univers des Gadgets",
-  siteUrl: "https://univers-des-gadgets.com",
+  siteUrl: SITE_URL,
   defaultTitle: "Univers des Gadgets — Impression Laser & Personnalisation à Douala, Cameroun",
   defaultDescription: "Univers des Gadgets : impression laser, gravure, personnalisation d'objets, bâches, roll-up et sérigraphie à Douala. Services professionnels d'impression pour entreprises et particuliers au Cameroun.",
   defaultKeywords: [

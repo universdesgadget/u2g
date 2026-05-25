@@ -1,20 +1,25 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
+import { FAVICON_URL } from "@/lib/constants";
 import "./index.css";
 
-const FAVICON_HREF = "/favicon.png?v=3";
-
-/** Garantit le favicon (logo 3) après navigation SPA. */
+/** Garantit le favicon (logo 3) sur le domaine principal après navigation SPA. */
 function ensureFavicon() {
-  let link = document.querySelector<HTMLLinkElement>('link[rel="icon"][type="image/png"]');
-  if (!link) {
-    link = document.createElement("link");
+  const links = document.querySelectorAll<HTMLLinkElement>(
+    'link[rel="icon"], link[rel="shortcut icon"]'
+  );
+  if (links.length === 0) {
+    const link = document.createElement("link");
     link.rel = "icon";
     link.type = "image/png";
     link.sizes = "32x32";
+    link.href = FAVICON_URL;
     document.head.prepend(link);
+    return;
   }
-  link.href = FAVICON_HREF;
+  links.forEach((link) => {
+    link.href = FAVICON_URL;
+  });
 }
 
 ensureFavicon();

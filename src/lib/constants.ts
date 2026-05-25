@@ -1,3 +1,13 @@
+/** Domaine principal (SEO, canonical, Open Graph) */
+export const SITE_URL = "https://universdesgadgets.com" as const;
+
+/** Ancien domaine Vercel — redirigé vers SITE_URL (vercel.json) */
+export const LEGACY_VERCEL_URL = "https://u2g.vercel.app" as const;
+
+/** Favicon onglet (fichier : public/favicon.png, source logo 3) */
+export const FAVICON_PATH = "/favicon.png?v=4" as const;
+export const FAVICON_URL = `${SITE_URL}${FAVICON_PATH}` as const;
+
 // Contact entreprise — un seul endroit à modifier
 export const CONTACT = {
   whatsappNumber: "237697320490",

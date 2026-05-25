@@ -1,5 +1,8 @@
 # 🚀 Guide SEO - Univers des Gadgets
 
+**Domaine principal :** `https://universdesgadgets.com`  
+**Ancien domaine Vercel :** `u2g.vercel.app` → redirige en 301 vers le domaine principal (`vercel.json`).
+
 ## 📋 Optimisations implémentées
 
 ### 1. **Meta Tags HTML**

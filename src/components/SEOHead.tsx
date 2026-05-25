@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { SITE_URL, FAVICON_URL } from "@/lib/constants";
 
 interface SEOHeadProps {
   title?: string;
@@ -14,11 +15,13 @@ const SEOHead = ({
   description = "Univers des Gadgets : impression laser, gravure, personnalisation d'objets, bâches, roll-up et sérigraphie à Douala. Services professionnels d'impression pour entreprises et particuliers au Cameroun.",
   keywords = "impression laser douala, gravure douala, personnalisation objets cameroun, impression professionnelle, sérigraphie douala, bâches publicitaires, roll-up, gravure sur bois, marquage industriel, univers des gadgets",
   image = "/og-image.jpg",
-  url = "https://univers-des-gadgets.com/",
+  url = `${SITE_URL}/`,
   type = "website"
 }: SEOHeadProps) => {
   return (
     <Helmet>
+      <link rel="icon" type="image/png" sizes="32x32" href={FAVICON_URL} />
+      <link rel="icon" href={`${SITE_URL}/favicon.ico`} sizes="any" />
       {/* Meta tags de base */}
       <title>{title}</title>
       <meta name="description" content={description} />
