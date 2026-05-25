@@ -1,5 +1,11 @@
-/** Domaine principal du site */
-export const SITE_URL = "https://universdesgadgets.com" as const;
+/**
+ * Domaine principal — Vercel redirige automatiquement universdesgadgets.com → www.
+ * Ne pas ajouter de redirection www → apex dans vercel.json (boucle = page blanche).
+ */
+export const SITE_URL = "https://www.universdesgadgets.com" as const;
+
+/** Domaine sans www (redirigé vers www par Vercel) */
+export const SITE_URL_APEX = "https://universdesgadgets.com" as const;
 
 /** Ancien domaine Vercel — doit rediriger vers SITE_URL (vercel.json + script index.html) */
 export const LEGACY_VERCEL_URL = "https://u2g.vercel.app" as const;

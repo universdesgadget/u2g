@@ -12,7 +12,14 @@ Si en tapant `universdesgadgets.com` vous arrivez sur `u2g.vercel.app`, le probl
 4. Cliquez sur **`universdesgadgets.com`** :
    - Choisissez **Set as Primary Domain** (domaine principal).
    - **Ne cochez pas** « Redirect to Vercel URL » / redirection vers `u2g.vercel.app`.
-5. Pour `u2g.vercel.app` : laissez-le ; le fichier `vercel.json` redirige automatiquement vers `https://universdesgadgets.com`.
+5. Pour `u2g.vercel.app` : le fichier `vercel.json` redirige vers `https://www.universdesgadgets.com`.
+
+## Important — éviter la page blanche
+
+**Ne ajoutez pas** dans `vercel.json` une redirection `www` → `universdesgadgets.com` : Vercel redirige déjà `universdesgadgets.com` → `www`, ce qui créerait une **boucle infinie** et une page blanche.
+
+Le site fonctionne sur **`https://www.universdesgadgets.com`**.  
+Pour utiliser l’URL **sans www** dans la barre d’adresse : dans Vercel → Domains → définir `universdesgadgets.com` comme **Primary Domain** et désactiver la redirection automatique vers `www`.
 
 ## DNS (chez votre registrar : OVH, Namecheap, etc.)
 
