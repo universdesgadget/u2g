@@ -1,10 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/favicon.png",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/favicon.png",
       "headers": [
         { "key": "Content-Type", "value": "image/png" },
-        { "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
       ]
     }
   ]

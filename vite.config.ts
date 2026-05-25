@@ -11,7 +11,20 @@ export default defineConfig({
       overlay: false,
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: "favicon-ico-fallback",
+      configureServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          if (req.url?.split("?")[0] === "/favicon.ico") {
+            req.url = "/favicon.png";
+          }
+          next();
+        });
+      },
+    },
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
