@@ -13,13 +13,22 @@ Placez toutes les images directement dans `public/images/`.
 | `a-propos-bg.jpg` | Fond de la page À propos |
 | `partners/partner-1.png` … `partner-8.png` | Logos entreprises partenaires (fond transparent de préférence) |
 
-## Logo du site (navbar + onglet navigateur)
+## Logo navbar (inchangé)
 
 | Fichier | Usage |
 |---------|-------|
-| `public/logo.png` | Logo navbar **et** icône de l’onglet (favicon) |
+| `public/logo.png` | Logo dans la barre de navigation uniquement |
 
-Recommandé : PNG carré ou proche du carré, **512×512 px** minimum pour un rendu net sur mobile.
+Recommandé : hauteur ~80–120 px, fond transparent si possible.
+
+## Icône onglet navigateur (favicon — image séparée)
+
+| Fichier | Taille | Usage |
+|---------|--------|-------|
+| `public/favicon.png` | **32×32 px** (obligatoire) | Onglet du navigateur |
+| `public/apple-touch-icon.png` | **180×180 px** (optionnel) | Raccourci écran d’accueil iPhone / iPad |
+
+**Conseils :** image **carrée**, symbole simple et lisible (pas de texte trop petit). PNG avec fond transparent ou fond uni contrasté. Exportez depuis votre logo une version **simplifiée** (icône seule), pas la bannière complète de la navbar.
 
 ## Structure du dossier
 
