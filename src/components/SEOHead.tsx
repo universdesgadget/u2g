@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { SITE_URL, FAVICON_URL } from "@/lib/constants";
+import { SITE_URL, FAVICON_PATH } from "@/lib/constants";
 
 interface SEOHeadProps {
   title?: string;
@@ -20,8 +20,8 @@ const SEOHead = ({
 }: SEOHeadProps) => {
   return (
     <Helmet>
-      <link rel="icon" type="image/png" sizes="32x32" href={FAVICON_URL} />
-      <link rel="icon" href={`${SITE_URL}/favicon.ico`} sizes="any" />
+      <link rel="icon" type="image/png" sizes="32x32" href={FAVICON_PATH} />
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       {/* Meta tags de base */}
       <title>{title}</title>
       <meta name="description" content={description} />

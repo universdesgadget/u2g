@@ -3,13 +3,7 @@
     {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "u2g.vercel.app" }],
-      "destination": "https://universdesgadgets.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.universdesgadgets.com" }],
-      "destination": "https://universdesgadgets.com/:path*",
+      "destination": "https://www.universdesgadgets.com/:path*",
       "permanent": true
     },
     {
@@ -23,13 +17,6 @@
       "source": "/favicon.png",
       "headers": [
         { "key": "Content-Type", "value": "image/png" },
-        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/favicon.ico",
-      "headers": [
-        { "key": "Content-Type", "value": "image/x-icon" },
         { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
       ]
     }

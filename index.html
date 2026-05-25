@@ -4,17 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Favicon onglet (logo 3 → favicon.png) — URLs absolues pour tous les domaines -->
-    <link rel="icon" href="https://universdesgadgets.com/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="https://universdesgadgets.com/favicon.png?v=4" />
-    <script>
-      (function () {
-        var h = "https://universdesgadgets.com/favicon.png?v=4";
-        document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]').forEach(function (el) {
-          el.href = h;
-        });
-      })();
-    </script>
+    <!-- Favicon onglet (logo 3 → favicon.png) — chemins relatifs (évite boucles www/apex) -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=5" />
     
     <!-- SEO Meta Tags -->
     <title>Univers des Gadgets — Impression Laser & Personnalisation à Douala, Cameroun</title>
@@ -26,16 +18,16 @@
     <meta name="bingbot" content="index, follow" />
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://universdesgadgets.com/" />
+    <link rel="canonical" href="https://www.universdesgadgets.com/" />
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Univers des Gadgets — Impression Laser & Personnalisation à Douala" />
     <meta property="og:description" content="Services professionnels d'impression laser, gravure et personnalisation à Douala, Cameroun. Qualité, rapidité et créativité pour vos projets." />
-    <meta property="og:url" content="https://universdesgadgets.com/" />
+    <meta property="og:url" content="https://www.universdesgadgets.com/" />
     <meta property="og:site_name" content="Univers des Gadgets" />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:image" content="https://universdesgadgets.com/og-image.jpg" />
+    <meta property="og:image" content="https://www.universdesgadgets.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Univers des Gadgets - Services d'impression et personnalisation à Douala" />
@@ -44,7 +36,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Univers des Gadgets — Impression Laser & Personnalisation à Douala" />
     <meta name="twitter:description" content="Services professionnels d'impression laser, gravure et personnalisation à Douala, Cameroun." />
-    <meta name="twitter:image" content="https://universdesgadgets.com/og-image.jpg" />
+    <meta name="twitter:image" content="https://www.universdesgadgets.com/og-image.jpg" />
     <meta name="twitter:image:alt" content="Univers des Gadgets - Services d'impression et personnalisation à Douala" />
     
     <!-- Structured Data (JSON-LD) -->
@@ -54,9 +46,9 @@
       "@type": "LocalBusiness",
       "name": "Univers des Gadgets",
       "description": "Services professionnels d'impression laser, gravure et personnalisation à Douala, Cameroun",
-      "url": "https://universdesgadgets.com/",
-      "logo": "https://universdesgadgets.com/favicon.png",
-      "image": "https://universdesgadgets.com/og-image.jpg",
+      "url": "https://www.universdesgadgets.com/",
+      "logo": "https://www.universdesgadgets.com/favicon.png",
+      "image": "https://www.universdesgadgets.com/og-image.jpg",
       "telephone": "+237697320490",
       "email": "quentinzango470@gmail.com",
       "address": {
