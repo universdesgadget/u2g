@@ -1,9 +1,20 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
-import { FAVICON_PATH } from "@/lib/constants";
+import { FAVICON_PATH, SITE_URL } from "@/lib/constants";
 import "./index.css";
 
-/** Garantit le favicon (logo 3) sur le domaine principal après navigation SPA. */
+/** Quitte u2g.vercel.app vers le domaine principal (secours si vercel.json non appliqué). */
+function redirectLegacyDomain() {
+  const host = window.location.hostname;
+  if (host === "u2g.vercel.app" || host.endsWith(".vercel.app")) {
+    const target = new URL(window.location.pathname + window.location.search + window.location.hash, SITE_URL);
+    window.location.replace(target.toString());
+  }
+}
+
+redirectLegacyDomain();
+
+/** Garantit le favicon (logo 3) après navigation SPA. */
 function ensureFavicon() {
   const links = document.querySelectorAll<HTMLLinkElement>(
     'link[rel="icon"], link[rel="shortcut icon"]'

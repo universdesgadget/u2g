@@ -1,15 +1,11 @@
-/** Domaine principal (SEO) — aligné sur www (redirection Vercel apex → www) */
-export const SITE_URL = "https://www.universdesgadgets.com" as const;
+/** Domaine principal du site */
+export const SITE_URL = "https://universdesgadgets.com" as const;
 
-/** Domaine sans www (redirige vers SITE_URL chez Vercel) */
-export const SITE_URL_APEX = "https://universdesgadgets.com" as const;
-
-/** Ancien domaine Vercel — redirigé vers SITE_URL (vercel.json) */
+/** Ancien domaine Vercel — doit rediriger vers SITE_URL (vercel.json + script index.html) */
 export const LEGACY_VERCEL_URL = "https://u2g.vercel.app" as const;
 
-/** Favicon onglet (fichier : public/favicon.png, source logo 3) */
-/** Chemin relatif : fonctionne sur www et apex sans boucle de redirection */
-export const FAVICON_PATH = "/favicon.png?v=5" as const;
+/** Favicon onglet (public/favicon.png, source logo 3.png) */
+export const FAVICON_PATH = "/favicon.png?v=6" as const;
 
 // Contact entreprise — un seul endroit à modifier
 export const CONTACT = {
