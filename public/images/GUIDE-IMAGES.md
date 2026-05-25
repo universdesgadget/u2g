@@ -21,17 +21,17 @@ Placez toutes les images directement dans `public/images/`.
 
 Recommandé : hauteur ~80–120 px, fond transparent si possible.
 
-## Icône onglet navigateur (favicon — image séparée)
+## Icône onglet navigateur (favicon)
 
-| Fichier | Taille | Usage |
-|---------|--------|-------|
-| `public/favicon.png` | **32×32 px** (obligatoire) | Onglet du navigateur |
-| `public/favicon.ico` | **32×32 px** (généré depuis le PNG) | Requête automatique Chrome / Edge |
-| `public/apple-touch-icon.png` | **180×180 px** (optionnel) | Raccourci écran d’accueil iPhone / iPad |
+| Fichier | Usage |
+|---------|-------|
+| `public/logo.png` | Logo **navbar** uniquement |
+| `public/logo 3.png` | Fichier source de l’icône onglet (votre visuel) |
+| `public/favicon.png` | Icône **onglet** servie par le site (copie de `logo 3.png`) |
 
-Après remplacement du PNG, recopiez-le aussi en `favicon.ico` (même image), ou convertissez sur [favicon.io](https://favicon.io).
+Pour changer l’icône onglet : remplacez `logo 3.png`, puis recopiez-le en `favicon.png` (ou remplacez directement `favicon.png`).
 
-**Conseils :** image **carrée**, symbole simple et lisible (pas de texte trop petit). PNG avec fond transparent ou fond uni contrasté. Exportez depuis votre logo une version **simplifiée** (icône seule), pas la bannière complète de la navbar.
+**Important :** ne créez pas de `favicon.ico` en renommant un PNG.
 
 ## Structure du dossier
 
