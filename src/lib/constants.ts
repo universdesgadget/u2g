@@ -30,7 +30,7 @@ export const CONTACT = {
 
 // Réseaux sociaux — URLs à adapter selon vos comptes
 export const SOCIAL = {
-  facebook: "https://facebook.com/share/1CEUf7Mf4f/",
+  facebook: "https://www.facebook.com/profile.php?id=61566203048762",
   instagram: "https://instagram.com/universdesgadgets",
   tiktok: "https://vm.tiktok.com/ZS9YfGfayMqSs-fk5jg/",
   whatsapp: `https://wa.me/${CONTACT.whatsappNumber}`,
