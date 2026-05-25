@@ -26,7 +26,10 @@ Recommandé : hauteur ~80–120 px, fond transparent si possible.
 | Fichier | Taille | Usage |
 |---------|--------|-------|
 | `public/favicon.png` | **32×32 px** (obligatoire) | Onglet du navigateur |
+| `public/favicon.ico` | **32×32 px** (généré depuis le PNG) | Requête automatique Chrome / Edge |
 | `public/apple-touch-icon.png` | **180×180 px** (optionnel) | Raccourci écran d’accueil iPhone / iPad |
+
+Après remplacement du PNG, recopiez-le aussi en `favicon.ico` (même image), ou convertissez sur [favicon.io](https://favicon.io).
 
 **Conseils :** image **carrée**, symbole simple et lisible (pas de texte trop petit). PNG avec fond transparent ou fond uni contrasté. Exportez depuis votre logo une version **simplifiée** (icône seule), pas la bannière complète de la navbar.
 
