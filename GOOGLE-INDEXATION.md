@@ -17,7 +17,8 @@ Ouvrez en navigation privée :
 
 1. Allez sur [Google Search Console](https://search.google.com/search-console).
 2. **Ajoutez une propriété** : `https://www.universdesgadgets.com` (préfixe URL).
-3. Validez la propriété (fichier HTML, balise meta ou DNS — suivez les instructions Google).
+3. Validez la propriété — **guide complet (LWS + toutes méthodes)** : voir **`GOOGLE-SEARCH-CONSOLE-LWS.md`**.  
+   La balise meta Google est déjà dans `index.html` : redéployez puis cliquez sur **Valider**.
 4. Menu **Sitemaps** → ajoutez : `https://www.universdesgadgets.com/sitemap.xml`
 5. Menu **Inspection de l’URL** → tapez `https://www.universdesgadgets.com/` → **Demander une indexation**.
 
