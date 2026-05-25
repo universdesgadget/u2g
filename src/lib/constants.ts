@@ -10,8 +10,13 @@ export const SITE_URL_APEX = "https://universdesgadgets.com" as const;
 /** Ancien domaine Vercel — doit rediriger vers SITE_URL (vercel.json + script index.html) */
 export const LEGACY_VERCEL_URL = "https://u2g.vercel.app" as const;
 
+export const SITE_NAME = "Univers des Gadgets" as const;
+
 /** Favicon onglet (public/favicon.png, source logo 3.png) */
-export const FAVICON_PATH = "/favicon.png?v=6" as const;
+export const FAVICON_PATH = "/favicon.png?v=7" as const;
+
+/** Logo pour Google / réseaux (min. 48×48 px) */
+export const BRAND_LOGO_URL = `${SITE_URL}/apple-touch-icon.png` as const;
 
 // Contact entreprise — un seul endroit à modifier
 export const CONTACT = {

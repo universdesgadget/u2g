@@ -1,0 +1,24 @@
+{
+  "name": "Univers des Gadgets",
+  "short_name": "U2G",
+  "description": "Impression laser, gravure et personnalisation à Douala, Cameroun",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "fr",
+  "background_color": "#1e2433",
+  "theme_color": "#c9a227",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

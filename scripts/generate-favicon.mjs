@@ -1,5 +1,4 @@
-import { existsSync, writeFileSync } from "fs";
-import pngToIco from "png-to-ico";
+import { existsSync, writeFileSync, copyFileSync } from "fs";
 
 const source = "public/favicon.png";
 const target = "public/favicon.ico";
@@ -9,6 +8,12 @@ if (!existsSync(source)) {
   process.exit(0);
 }
 
-const ico = await pngToIco(source);
-writeFileSync(target, ico);
-console.log("[favicon] public/favicon.ico généré depuis favicon.png");
+try {
+  const pngToIco = (await import("png-to-ico")).default;
+  const ico = await pngToIco(source);
+  writeFileSync(target, ico);
+  console.log("[favicon] public/favicon.ico généré (format ICO)");
+} catch {
+  copyFileSync(source, target);
+  console.log("[favicon] public/favicon.ico copié depuis favicon.png (secours)");
+}
