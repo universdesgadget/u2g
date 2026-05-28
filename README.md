@@ -26,7 +26,7 @@ cp .env.example .env
 
 ## Variables d'environnement
 
-Crée un fichier `.env` à la racine (voir `.env.example`) avec :
+ fichier `.env` à la racine (voir `.env.example`) avec :
 
 - `VITE_SUPABASE_URL` : URL du projet Supabase (Settings > API > Project URL).
 - `VITE_SUPABASE_PUBLISHABLE_KEY` : clé **anon public** (Settings > API > Project API keys > anon public).
@@ -35,11 +35,11 @@ Ne commite jamais `.env`. Utilise la clé **anon**, pas la clé service.
 
 ## Configurer le backend Supabase (ton propre projet)
 
-1. Crée un projet sur [supabase.com](https://supabase.com) (ton compte).
+1.  un projet sur [supabase.com](https://supabase.com).
 2. Dans le **SQL Editor**, exécute le script complet :
    - Fichier : `supabase/schema-complet.sql`
-3. Crée ton premier admin :
-   - Authentication > Users : crée un utilisateur (ou inscris-toi via l’app sur `/auth`).
+3. premier admin :
+   - Authentication > Users : crée un utilisateur 
    - Copie son **UID**.
    - Dans le SQL Editor :
      ```sql
@@ -69,4 +69,3 @@ Ouvre [http://localhost:8080](http://localhost:8080).
 - `src/integrations/supabase/` : client et types Supabase
 - `src/hooks/useAuth.tsx` : session et rôle admin
 
-Ce projet est indépendant de Lovable ; tu en as le contrôle total.

@@ -1,24 +1,9 @@
 {
-  "redirects": [
+  "routes": [
+    { "handle": "filesystem" },
     {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "u2g.vercel.app" }],
-      "destination": "https://www.universdesgadgets.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/favicon.ico",
-      "destination": "/favicon.png",
-      "permanent": false
-    }
-  ],
-  "headers": [
-    {
-      "source": "/favicon.png",
-      "headers": [
-        { "key": "Content-Type", "value": "image/png" },
-        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
-      ]
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }

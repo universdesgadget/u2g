@@ -1,6 +1,5 @@
 # Configurer `universdesgadgets.com` sur Vercel
 
-Si en tapant `universdesgadgets.com` vous arrivez sur `u2g.vercel.app`, le problème vient en général des **réglages Vercel**, pas du code du site.
 
 ## Étapes obligatoires (Vercel Dashboard)
 
