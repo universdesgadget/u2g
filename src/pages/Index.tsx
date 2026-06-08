@@ -8,6 +8,7 @@ import TrustedPartners from "@/components/TrustedPartners";
 import RequestForm from "@/components/RequestForm";
 import MapSection from "@/components/MapSection";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 const sectionIds: Record<string, string> = {
   services: "#services",
@@ -27,6 +28,11 @@ const Index = ({ scrollTo }: { scrollTo?: keyof typeof sectionIds }) => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead
+        title="Gadgets technologiques et objets publicitaires au Cameroun | Univers des Gadgets"
+        description="Univers des Gadgets propose gadgets technologiques au Cameroun, objets publicitaires personnalisés à Yaoundé, impression sur gourdes et cadeaux d'entreprise personnalisés. Livraison et service local au Cameroun."
+        keywords="gadgets technologiques au Cameroun, objets publicitaires personnalisés à Yaoundé, impression sur gourdes, cadeaux d'entreprise personnalisés, accessoires informatiques à Yaoundé, cadeaux promotionnels Cameroun"
+      />
       <Navbar />
       <HeroCarousel />
       <Services />

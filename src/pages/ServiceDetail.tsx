@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MediaCard from "@/components/MediaCard";
+import SEOHead from "@/components/SEOHead";
 import { downloadFile } from "@/lib/download";
 import { useState } from "react";
 
@@ -28,6 +29,26 @@ const ServiceDetail = () => {
     },
     enabled: !!id,
   });
+
+  const pageTitle = service
+    ? `${service.title} – Univers des Gadgets à Douala`
+    : "Service Univers des Gadgets";
+
+  const pageDescription = service
+    ? `${service.description} Univers des Gadgets propose des gadgets technologiques au Cameroun, objets publicitaires personnalisés à Yaoundé, impression sur gourdes et cadeaux d'entreprise personnalisés.`
+    : "Univers des Gadgets propose des services de personnalisation d'objets et d'impression professionnelle au Cameroun.";
+
+  const pageKeywords = service
+    ? [
+        service.title.toLowerCase(),
+        "gadgets technologiques au Cameroun",
+        "objets publicitaires personnalisés à Yaoundé",
+        "impression sur gourdes",
+        "cadeaux d'entreprise personnalisés",
+        "accessoires informatiques à Yaoundé",
+        "cadeaux promotionnels Cameroun"
+      ].join(", ")
+    : "gadgets technologiques au Cameroun, objets publicitaires personnalisés à Yaoundé, impression sur gourdes, cadeaux d'entreprise personnalisés";
 
   const { data: photos } = useQuery({
     queryKey: ["service-photos", id],
@@ -90,6 +111,11 @@ const ServiceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={pageTitle}
+        description={pageDescription}
+        keywords={pageKeywords}
+      />
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
