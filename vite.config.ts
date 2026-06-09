@@ -13,15 +13,10 @@ export default defineConfig({
   },
   build: {
     target: 'ES2020',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-      output: {
-        comments: false,
-      },
+    minify: 'esbuild',
+    esbuild: {
+      drop: ['console', 'debugger'],
+      legalComments: 'none',
     },
     rollupOptions: {
       output: {
