@@ -14,7 +14,7 @@ const Hero = () => {
           className="w-full h-full object-cover" 
           loading="eager"
           decoding="sync"
-          fetchPriority="high"
+          fetchpriority="high"
         />
         <div className="absolute inset-0 bg-secondary/85" aria-hidden="true" />
       </div>

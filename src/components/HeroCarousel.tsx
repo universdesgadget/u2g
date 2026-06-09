@@ -36,7 +36,7 @@ const HeroCarousel = () => {
             style={{ objectPosition: 'center' }}
             loading="eager"
             decoding="sync"
-            fetchPriority={current === 0 ? "high" : "low"}
+            fetchpriority={current === 0 ? "high" : "low"}
             width={1920}
             height={1080}
             onError={(e) => {
