@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroCarousel from "@/components/HeroCarousel";
 import Services from "@/components/Services";
-import Gallery from "@/components/Gallery";
-import Testimonials from "@/components/Testimonials";
-import TrustedPartners from "@/components/TrustedPartners";
-import RequestForm from "@/components/RequestForm";
-import MapSection from "@/components/MapSection";
-import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+
+const Gallery = lazy(() => import("@/components/Gallery"));
+const Testimonials = lazy(() => import("@/components/Testimonials"));
+const TrustedPartners = lazy(() => import("@/components/TrustedPartners"));
+const RequestForm = lazy(() => import("@/components/RequestForm"));
+const MapSection = lazy(() => import("@/components/MapSection"));
+const Footer = lazy(() => import("@/components/Footer"));
 
 const sectionIds: Record<string, string> = {
   services: "#services",
@@ -36,12 +37,24 @@ const Index = ({ scrollTo }: { scrollTo?: keyof typeof sectionIds }) => {
       <Navbar />
       <HeroCarousel />
       <Services />
-      <Gallery />
-      <Testimonials />
-      <TrustedPartners />
-      <RequestForm />
-      <MapSection />
-      <Footer />
+      <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-muted-foreground">Chargement de la galerie...</div>}>
+        <Gallery />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-muted-foreground">Chargement des témoignages...</div>}>
+        <Testimonials />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-muted-foreground">Chargement des partenaires...</div>}>
+        <TrustedPartners />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-muted-foreground">Chargement du formulaire...</div>}>
+        <RequestForm />
+      </Suspense>
+      <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-muted-foreground">Chargement de la carte...</div>}>
+        <MapSection />
+      </Suspense>
+      <Suspense fallback={<div className="py-20 flex items-center justify-center text-muted-foreground">Chargement du pied de page...</div>}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

@@ -226,6 +226,9 @@ const ServiceDetail = () => {
                 src={selectedPhoto}
                 alt="Photo agrandie"
                 className="w-full h-auto rounded"
+                loading="lazy"
+                width={1200}
+                height={900}
               />
               <Button
                 size="sm"

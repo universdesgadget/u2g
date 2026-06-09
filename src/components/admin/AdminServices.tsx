@@ -140,7 +140,7 @@ const AdminServices = () => {
               <CardContent className="p-4 flex items-center gap-4">
                 <GripVertical className="w-4 h-4 text-muted-foreground shrink-0" />
                 {service.image_url && (
-                  <img src={service.image_url} alt={service.title} className="w-16 h-16 rounded object-cover shrink-0" />
+                  <img src={service.image_url} alt={service.title} className="w-16 h-16 rounded object-cover shrink-0" loading="lazy" width={64} height={64} />
                 )}
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-card-foreground">{service.title}</p>
@@ -154,10 +154,10 @@ const AdminServices = () => {
                   >
                     {service.is_active ? "Désactiver" : "Activer"}
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => openEdit(service)}>
+                  <Button variant="ghost" size="icon" onClick={() => openEdit(service)} aria-label="Modifier le service">
                     <Pencil className="w-4 h-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(service.id)}>
+                  <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(service.id)} aria-label="Supprimer le service">
                     <Trash2 className="w-4 h-4 text-destructive" />
                   </Button>
                 </div>

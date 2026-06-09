@@ -14,6 +14,9 @@ const Testimonials = () => {
           src={TESTIMONIALS_BG}
           alt=""
           className="w-full h-full object-cover object-center sm:object-center md:object-cover lg:object-cover"
+          loading="lazy"
+          width={1920}
+          height={1080}
           aria-hidden
           onError={(e) => {
             (e.target as HTMLImageElement).src = "/og-image.jpg";
@@ -59,6 +62,9 @@ const Testimonials = () => {
                   src={testimonial.image}
                   alt={testimonial.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-primary/30"
+                  loading="lazy"
+                  width={48}
+                  height={48}
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = "/og-image.jpg";
                   }}

@@ -73,6 +73,8 @@ const TrustedPartners = () => {
                           alt={partner.name}
                           className="max-h-10 max-w-[88px] w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity"
                           loading="lazy"
+                          width={88}
+                          height={40}
                           onError={(e) => {
                             (e.target as HTMLImageElement).style.visibility = "hidden";
                           }}
@@ -98,6 +100,8 @@ const TrustedPartners = () => {
                     alt={partner.name}
                     className="h-8 md:h-10 w-auto max-w-[120px] object-contain grayscale hover:grayscale-0 opacity-80 hover:opacity-100 transition-all duration-300"
                     loading="lazy"
+                    width={120}
+                    height={40}
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = "/logo.png";
                     }}

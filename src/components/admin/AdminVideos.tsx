@@ -184,10 +184,10 @@ const AdminVideos = () => {
                   )}
                 </div>
                 <div className="flex gap-1 mt-3">
-                  <Button variant="ghost" size="icon" onClick={() => openEdit(video)}>
+                  <Button variant="ghost" size="icon" onClick={() => openEdit(video)} aria-label="Modifier la vidéo">
                     <Pencil className="w-4 h-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(video.id)}>
+                  <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(video.id)} aria-label="Supprimer la vidéo">
                     <Trash2 className="w-4 h-4 text-destructive" />
                   </Button>
                 </div>

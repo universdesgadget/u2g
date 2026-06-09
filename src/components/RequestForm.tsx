@@ -81,6 +81,9 @@ const RequestForm = () => {
           src={CONTACT_BG}
           alt=""
           className="w-full h-full object-cover object-center sm:object-center md:object-cover lg:object-cover"
+          loading="lazy"
+          width={1920}
+          height={1080}
           aria-hidden
           onError={(e) => {
             (e.target as HTMLImageElement).src = "/og-image.jpg";

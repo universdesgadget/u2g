@@ -176,7 +176,7 @@ const AdminPhotos = () => {
           {photos.map((photo) => (
             <Card key={photo.id} className="overflow-hidden">
               <div className="aspect-[4/3] overflow-hidden">
-                <img src={photo.image_url} alt={photo.title} className="w-full h-full object-cover" />
+                <img src={photo.image_url} alt={photo.title} className="w-full h-full object-cover" loading="lazy" width={400} height={300} />
               </div>
               <CardContent className="p-4 flex items-center justify-between">
                 <div>
@@ -186,10 +186,10 @@ const AdminPhotos = () => {
                   )}
                 </div>
                 <div className="flex gap-1">
-                  <Button variant="ghost" size="icon" onClick={() => openEdit(photo)}>
+                  <Button variant="ghost" size="icon" onClick={() => openEdit(photo)} aria-label="Modifier la photo">
                     <Pencil className="w-4 h-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(photo.id)}>
+                  <Button variant="ghost" size="icon" onClick={() => deleteMutation.mutate(photo.id)} aria-label="Supprimer la photo">
                     <Trash2 className="w-4 h-4 text-destructive" />
                   </Button>
                 </div>

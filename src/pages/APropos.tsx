@@ -17,6 +17,10 @@ const APropos = () => {
               src={ABOUT_BG}
               alt="Univers des Gadgets - À propos"
               className="w-full h-full object-cover object-center sm:object-center md:object-cover lg:object-cover"
+              loading="lazy"
+              width={1920}
+              height={1080}
+              aria-hidden
               onError={(e) => {
                 (e.target as HTMLImageElement).src = "/og-image.jpg";
               }}

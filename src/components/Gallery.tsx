@@ -168,7 +168,14 @@ const Gallery = () => {
           <DialogContent className="max-w-4xl p-2">
             {selectedPhoto && (
               <div className="relative">
-                <img src={selectedPhoto} alt="Photo agrandie" className="w-full h-auto rounded" />
+                <img
+                  src={selectedPhoto}
+                  alt="Photo agrandie"
+                  className="w-full h-auto rounded"
+                  loading="lazy"
+                  width={1200}
+                  height={900}
+                />
                 <Button
                   size="sm"
                   variant="secondary"
