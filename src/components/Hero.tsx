@@ -8,8 +8,15 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden" aria-label="Section principale - Services d'impression à Douala">
       {/* Background image */}
       <div className="absolute inset-0">
-        <img src={heroBg} alt="Atelier d'impression professionnel avec machines laser et équipements" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-secondary/85" />
+        <img 
+          src={heroBg} 
+          alt="Atelier d'impression professionnel avec machines laser et équipements modernes" 
+          className="w-full h-full object-cover" 
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
+        />
+        <div className="absolute inset-0 bg-secondary/85" aria-hidden="true" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 pt-20">

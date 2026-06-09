@@ -11,6 +11,30 @@ export default defineConfig({
       overlay: false,
     },
   },
+  build: {
+    target: 'ES2020',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+      output: {
+        comments: false,
+      },
+    },
+    rollupOptions: {
+      output: {
+        // Code-splitting pour meilleure gestion du cache
+        manualChunks: {
+          'vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui': ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+          'supabase': ['@supabase/supabase-js'],
+          'query': ['@tanstack/react-query'],
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     {

@@ -58,7 +58,15 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-border/20">
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-3 text-lg font-display font-bold tracking-tight">
-          <img src="/logo.png" alt="Univers des Gadgets" className="h-9 md:h-10 w-auto object-contain" />
+          <img 
+            src="/logo.png" 
+            alt="Univers des Gadgets - Impression laser et personnalisation" 
+            className="h-9 md:h-10 w-auto object-contain" 
+            width={40}
+            height={40}
+            loading="eager"
+            decoding="sync"
+          />
           <span className="text-gradient-gold">UNIVERS <span className="text-secondary-foreground">DES GADGETS</span></span>
         </Link>
 

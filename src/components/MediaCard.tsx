@@ -43,14 +43,20 @@ const MediaCard = ({ type, src, title, description, onPreview, className = "" }:
               alt={title}
               className="w-full h-full object-cover object-center sm:object-center md:object-cover lg:object-cover"
               loading="lazy"
+              decoding="async"
+              width={400}
+              height={300}
+              role="img"
+              aria-label={`Photo de ${title}`}
             />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100" aria-hidden="true">
               {onPreview && (
                 <Button
                   size="icon"
                   variant="secondary"
                   className="rounded-full opacity-90"
                   onClick={(e) => { e.stopPropagation(); onPreview(); }}
+                  aria-label={`Aperçu de la photo: ${title}`}
                 >
                   <ZoomIn className="w-4 h-4" />
                 </Button>
@@ -61,6 +67,7 @@ const MediaCard = ({ type, src, title, description, onPreview, className = "" }:
                 className="rounded-full opacity-90"
                 onClick={handleDownload}
                 disabled={downloading}
+                aria-label={`Télécharger la photo: ${title}`}
               >
                 {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
               </Button>
@@ -74,6 +81,9 @@ const MediaCard = ({ type, src, title, description, onPreview, className = "" }:
               preload="metadata"
               controls
               onClick={(e) => e.stopPropagation()}
+              width={640}
+              height={360}
+              aria-label={`Vidéo de ${title}`}
             />
             <Button
               size="sm"
@@ -81,6 +91,7 @@ const MediaCard = ({ type, src, title, description, onPreview, className = "" }:
               className="absolute bottom-2 right-2 shadow-lg"
               onClick={handleDownload}
               disabled={downloading}
+              aria-label={`Télécharger la vidéo: ${title}`}
             >
               {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4 mr-1" />}
               Télécharger
