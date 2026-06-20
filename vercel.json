@@ -2,6 +2,23 @@
   "routes": [
     { "handle": "filesystem" },
     {
+      "src": "^/(.*)$",
+      "has": [
+        {
+          "type": "host",
+          "value": "u2g\\.vercel\\.app"
+        }
+      ],
+      "status": 301,
+      "headers": {
+        "location": "https://www.universdesgadgets.com/$1"
+      }
+    },
+    {
+      "src": "^/(api|wp-admin|xmlrpc|blog|cgi-bin|admin-ajax)(/.*)?$",
+      "status": 404
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
