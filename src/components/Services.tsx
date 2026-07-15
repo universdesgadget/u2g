@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight } from "lucide-react";
+import { OG_IMAGE } from "@/lib/constants";
 
 const Services = () => {
   const { data: services, isLoading } = useQuery({
@@ -22,11 +23,11 @@ const Services = () => {
   const displayServices = services && services.length > 0
     ? services
     : [
-        { id: "fallback-1", title: "Impression Laser", description: "Documents, flyers, cartes de visite et plus.", image_url: "/og-image.jpg" },
-        { id: "fallback-2", title: "Personnalisation d'Objets", description: "Mugs, t-shirts, casquettes et articles promotionnels.", image_url: "/og-image.jpg" },
-        { id: "fallback-3", title: "Impression de Bâches", description: "Bâches grand format pour événements et publicité.", image_url: "/og-image.jpg" },
-        { id: "fallback-4", title: "Roll-Up", description: "Supports roll-up professionnels pour salons et expositions.", image_url: "/og-image.jpg" },
-        { id: "fallback-5", title: "Sérigraphie", description: "Impression sérigraphique sur textile, haute durabilité.", image_url: "/og-image.jpg" },
+        { id: "fallback-1", title: "Impression Laser", description: "Documents, flyers, cartes de visite et plus.", image_url: OG_IMAGE },
+        { id: "fallback-2", title: "Personnalisation d'Objets", description: "Mugs, t-shirts, casquettes et articles promotionnels.", image_url: OG_IMAGE },
+        { id: "fallback-3", title: "Impression de Bâches", description: "Bâches grand format pour événements et publicité.", image_url: OG_IMAGE },
+        { id: "fallback-4", title: "Roll-Up", description: "Supports roll-up professionnels pour salons et expositions.", image_url: OG_IMAGE },
+        { id: "fallback-5", title: "Sérigraphie", description: "Impression sérigraphique sur textile, haute durabilité.", image_url: OG_IMAGE },
       ];
 
   return (
@@ -60,7 +61,7 @@ const Services = () => {
                 >
                   <div className="aspect-[4/3] overflow-hidden rounded-t-2xl">
                     <img
-                      src={service.image_url || "/og-image.jpg"}
+                      src={service.image_url || OG_IMAGE}
                       alt={`Service ${service.title}: Cliquez pour voir les réalisations`}
                       className="w-full h-full object-cover"
                       loading="lazy"

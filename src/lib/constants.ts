@@ -18,6 +18,9 @@ export const FAVICON_PATH = "/favicon.png?v=7" as const;
 /** Logo pour Google / réseaux (min. 48×48 px) */
 export const BRAND_LOGO_URL = `${SITE_URL}/apple-touch-icon.png` as const;
 
+export const OG_IMAGE = "/og-image.jpg" as const;
+export const PLACEHOLDER_IMAGE = "/placeholder.svg" as const;
+
 // Contact entreprise — un seul endroit à modifier
 export const CONTACT = {
   whatsappNumber: "237697320490",

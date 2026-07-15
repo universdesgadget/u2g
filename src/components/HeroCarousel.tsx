@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CAROUSEL_SLIDES } from "@/lib/constants";
+import { CAROUSEL_SLIDES, OG_IMAGE } from "@/lib/constants";
+import { handleImageFallback } from "@/lib/utils";
 
 const HeroCarousel = () => {
   const [current, setCurrent] = useState(0);
@@ -40,7 +41,7 @@ const HeroCarousel = () => {
             width={1920}
             height={1080}
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "/og-image.jpg";
+              handleImageFallback(e.target as HTMLImageElement, OG_IMAGE);
             }}
           />
           <div className="absolute inset-0 bg-secondary/60" aria-hidden="true" />

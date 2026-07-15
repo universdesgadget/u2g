@@ -8,7 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { CONTACT, CONTACT_BG } from "@/lib/constants";
+import { CONTACT, CONTACT_BG, OG_IMAGE } from "@/lib/constants";
+import { handleImageFallback } from "@/lib/utils";
 
 const defaultServiceOptions = [
   "Impression Laser",
@@ -86,7 +87,7 @@ const RequestForm = () => {
           height={1080}
           aria-hidden
           onError={(e) => {
-            (e.target as HTMLImageElement).src = "/og-image.jpg";
+            handleImageFallback(e.target as HTMLImageElement, OG_IMAGE);
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-secondary/40 via-secondary/30 to-secondary/40" />

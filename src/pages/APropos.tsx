@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Mail } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { CONTACT } from "@/lib/constants";
-import { ABOUT_BG } from "@/lib/constants";
+import { CONTACT, ABOUT_BG, OG_IMAGE } from "@/lib/constants";
+import { handleImageFallback } from "@/lib/utils";
 
 const APropos = () => {
   return (
@@ -22,7 +22,7 @@ const APropos = () => {
               height={1080}
               aria-hidden
               onError={(e) => {
-                (e.target as HTMLImageElement).src = "/og-image.jpg";
+                handleImageFallback(e.target as HTMLImageElement, OG_IMAGE);
               }}
             />
             <div className="absolute inset-0 bg-secondary/85" />

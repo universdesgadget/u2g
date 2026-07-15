@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
-import { TESTIMONIALS, TESTIMONIALS_BG } from "@/lib/constants";
+import { TESTIMONIALS, TESTIMONIALS_BG, OG_IMAGE } from "@/lib/constants";
+import { handleImageFallback } from "@/lib/utils";
 
 const Testimonials = () => {
   return (
@@ -19,7 +20,7 @@ const Testimonials = () => {
           height={1080}
           aria-hidden
           onError={(e) => {
-            (e.target as HTMLImageElement).src = "/og-image.jpg";
+            handleImageFallback(e.target as HTMLImageElement, OG_IMAGE);
           }}
         />
         <div className="absolute inset-0 bg-secondary/70" />
@@ -66,7 +67,7 @@ const Testimonials = () => {
                   width={48}
                   height={48}
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/og-image.jpg";
+                    handleImageFallback(e.target as HTMLImageElement, OG_IMAGE);
                   }}
                 />
                 <div>

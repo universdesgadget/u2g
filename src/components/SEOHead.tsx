@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SITE_URL, FAVICON_PATH } from "@/lib/constants";
+import { SITE_URL, FAVICON_PATH, OG_IMAGE } from "@/lib/constants";
 
 interface SEOHeadProps {
   title?: string;
@@ -41,7 +41,7 @@ const SEOHead = ({
   title = "Univers des Gadgets — Impression Laser & Personnalisation à Douala, Cameroun",
   description = "Univers des Gadgets : impression laser, gravure, personnalisation d'objets, bâches, roll-up et sérigraphie à Douala. Services professionnels d'impression pour entreprises et particuliers au Cameroun.",
   keywords = "gadgets technologiques au Cameroun, objets publicitaires personnalisés à Yaoundé, impression sur gourdes, cadeaux d'entreprise personnalisés, accessoires informatiques à Yaoundé, cadeaux promotionnels Cameroun, impression laser douala, gravure douala, personnalisation objets cameroun, impression professionnelle, sérigraphie douala, bâches publicitaires, roll-up, gravure sur bois, marquage industriel, univers des gadgets",
-  image = "/og-image.jpg",
+  image = OG_IMAGE,
   url = `${SITE_URL}/`,
   type = "website"
 }: SEOHeadProps) => {
