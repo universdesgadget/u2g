@@ -1,26 +1,23 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
     {
-      "src": "^/(.*)$",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "u2g\\.vercel\\.app"
         }
       ],
-      "status": 301,
-      "headers": {
-        "location": "https://www.universdesgadgets.com/$1"
-      }
-    },
+      "destination": "https://www.universdesgadgets.com/:path*",
+      "statusCode": 301
+    }
+  ],
+  "rewrites": [
     {
-      "src": "^/(api|wp-admin|xmlrpc|blog|cgi-bin|admin-ajax)(/.*)?$",
-      "status": 404
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
